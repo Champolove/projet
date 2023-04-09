@@ -1,5 +1,5 @@
 package projet;
-	
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -15,17 +15,17 @@ public class Main extends Application {
 	public GestionDonnee getDonnee() {
 		return new GestionDonnee();
 	}
-	public class SimplePersonneListCell extends ListCell<Personne> { 
-		  
-	    @Override 
-	    protected void updateItem(Personne item, boolean empty) { 
-	        super.updateItem(item, empty); 
-	        setText(null); 
-	        if (!empty && item != null) { 
-	            final String text = String.format("%s %s", item.prenom, item.nom); 
-	            setText(text); 
-	        } 
-	    } 
+	public class SimplePersonneListCell extends ListCell<Personne> {
+
+	    @Override
+	    protected void updateItem(Personne item, boolean empty) {
+	        super.updateItem(item, empty);
+	        setText(null);
+	        if (!empty && item != null) {
+	            final String text = String.format("%s %s", item.prenom, item.nom);
+	            setText(text);
+	        }
+	    }
 	}
 	@Override
 	public void start(Stage primaryStage) {
@@ -59,11 +59,11 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
-		
+
 	}
 }
