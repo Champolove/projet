@@ -30,7 +30,7 @@ public class GestionDonnee {
 			ArrayList<String> attributs=new ArrayList<String>();
 			ArrayList<String> préférences=new ArrayList<String>();
 			ArrayList<String> rejets=new ArrayList<String>();
-			p=new Personne(prenom+r.nextInt(50),nom[r.nextInt(nom.length)],r.nextInt(18,65),sexe,80,choixSexe[r.nextInt(2)],r.nextInt(14,21)/10, attributs,préférences,rejets);
+			p=new Personne(prenom+r.nextInt(50),nom[r.nextInt(nom.length)],r.nextInt(47)+18,sexe,80,choixSexe[r.nextInt(2)],(r.nextInt(7)+14)/10, attributs,préférences,rejets);
 		}
 	}
 	
