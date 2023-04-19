@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GestionDonnee {
-
+	static enum animal{
+		chat,
+		chien,
+		tortue,
+		lapin,
+		serpent
+	}
 	ArrayList<Personne> listePersonne=new ArrayList<>();
 	ArrayList<PersonneT> listeHomme=new ArrayList<>();
 	ArrayList<PersonneT> listeFemme=new ArrayList<>();
@@ -13,13 +19,7 @@ public class GestionDonnee {
 		String[] prenomH= {"Donald", "Anthony", "James", "Jerry", "Michael", "Anton", "Steven", "Christian", "Tony", "James", "James", "Charles", "Gerard", "Philip", "Carlos", "Peter", "William", "Gary", "Derek", "Joseph", "Keith", "Philip", "Melvin", "Jean", "Robert", "Lewis", "Roy", "Daniel", "Adrian", "Allan", "Paul", "Dustin", "Edward", "Harley", "Joseph", "Lee", "Kenneth", "Kevin", "John", "Thomas", "Tyler", "James", "James", "Patrick", "Stephen", "John", "Gary", "Eric", "Curtis", "Albert", "Jayson", "John", "Kelly", "Jorge", "Vernon", "Evan", "Nathan", "Stan", "Michael", "Daniel", "Ronald", "Adrian", "Herman", "Paul", "Johnny", "Steven", "Rafael", "Edward", "Richard", "Jeffery", "Robert", "Daniel", "Thomas", "James", "James", "Michael", "Marshall", "Michael", "Peter", "Gary", "Steve", "James", "Carey", "Samuel", "George", "Robert", "Ashley", "Larry", "Robert", "Gary", "Wyatt", "John", "Ronald", "Steve", "Mark", "Jeffrey", "Ricky", "Anthony", "Daniel", "Sam"};
 		String[] nom= {"Taylor", "Ginn", "Myers", "Winslow", "Conroy", "Gebhart", "Anello", "Thompson", "Mirabal", "Wilson", "Blanding", "Mccray", "Hunter", "Koroma", "Wynne", "Wallace", "Grover", "Miller", "Skinner", "Alcorn", "Thomas", "Huffman", "Johnston", "Mathis", "Bernier", "Johnson", "Anspach", "Thao", "Scott", "Wright", "Delgado", "Alm", "Bryan", "Genet", "Ramirez", "Wilder", "Sutton", "Maloney", "Rahe", "Griffith", "Deane", "Warren", "Trantham", "Jones", "Wagner", "Gary", "Mcilhinney", "Dennis", "Washington", "Marino", "Guerrero", "Owens", "Rose", "Dorsey", "Scott", "Eye", "Wilson", "Lewis", "Lassiter", "Roberts", "Mathis", "Walker", "Cervera", "Perez", "Jackson", "Niesman", "Grullon", "Neely", "Stegall", "Fonseca", "Cheek", "Carpenter", "Bautista", "Smith", "Knight", "Vanschaick", "Michel", "Strahle", "Koverman", "Thomas", "Rae", "Boutelle", "Galindo", "Wasson", "Rojas", "Hill", "Carlson", "Peterson", "Baker", "Folk", "Thomas", "Williams", "Gilbert", "Velovic", "Ferrell", "Gonzalez", "Mash", "Atwood", "Shults", "Lewandowski"};
 		String[] choixSexe={"0","1"};
-		enum animal{
-			chat,
-			chien,
-			tortue,
-			lapin,
-			serpent
-		}
+		
 		//String a=String.valueOf(animal.values()[new Random().nextInt(animal.values().length)]);  return a random value of an enum
 		Personne p;
 		public creePersonne() {
