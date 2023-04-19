@@ -48,7 +48,7 @@ public class Main extends Application {
 			GestionDonnee gd=getDonnee();
 			final ComboBox<Personne> comboBox = new ComboBox();
 			comboBox.setButtonCell(new SimplePersonneListCell());
-			comboBox.setCellFactory(listView -> new SimplePersonneListCell());
+			comboBox.setCellFactory(listView -> new SimplePersonneListCell()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
