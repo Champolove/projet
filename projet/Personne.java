@@ -1,7 +1,6 @@
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Personne {
 	public static ArrayList<String> attributs=new ArrayList<String>();
@@ -20,7 +19,6 @@ public class Personne {
 	String aEnfant;
 	String hash;
 	String hashMatch;
-
 
 	public Personne(String n, String pn, int a, String s, String att,String aA,String aD,String aL,String aS,String aJV,String aE) {
 		prenom=n;

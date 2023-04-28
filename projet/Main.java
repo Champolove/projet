@@ -46,7 +46,7 @@ public class Main extends Application {
 			b.setOnAction(e-> System.out.println("hello"));
 			root.getChildren().add(b);
 			GestionDonnee gd=getDonnee();
-			final ComboBox<Personne> comboBox = new ComboBox();
+			final ComboBox<Personne> comboBox = new ComboBox<Personne>();
 			comboBox.setButtonCell(new SimplePersonneListCell());
 			comboBox.setCellFactory(listView -> new SimplePersonneListCell()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
