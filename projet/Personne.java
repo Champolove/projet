@@ -19,6 +19,7 @@ public class Personne {
 	String aEnfant;
 	String hash;
 	String hashMatch;
+	boolean hetero;
 
 	public Personne(String n, String pn, int a, String s, String att,String aA,String aD,String aL,String aS,String aJV,String aE) {
 		prenom=n;
@@ -32,6 +33,7 @@ public class Personne {
 		aimeJouerS=aS;
 		aimeJouerJV=aJV;
 		aEnfant=aE;
+		hetero=s!=att;
 		hash=s+att+aA+aD+aL+aS+aJV;
 		hashMatch=att+s+aD+aA+aL+aS+aJV;
 	}

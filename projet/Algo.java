@@ -1,4 +1,5 @@
-
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Algo {
 
@@ -16,18 +17,45 @@ public class Algo {
 			}
 			else {
 				if(0<=i && i<2) {
-					return 0;
+					return -10;
 				}
 				somme-=1*prio[i];
 			}
 		}
 		return somme;
 	}
-	public static void main(String[] args) {
-		Personne p1=new Personne("charlie", "charlie", 18, "1","0","1","2","1","1","1","0");
-		Personne p2=new Personne("charlie", "charlie", 18, "0","1","2","0","1","0","1","0");
+	public ArrayList<Personne> listeMatch(Personne p1,ArrayList<Personne> lp){
+		ArrayList<Personne> res=new ArrayList<Personne>();
+		int[] points={-1,-1,-1,-1,-1};
+		int j;
+		for(int i=0;i<lp.size();i++){
+			Personne p2=lp.get(i);
+			if(p1.nom!=p2.nom && p1.prenom!=p2.prenom){
+				int valeur=match(p1,p2);
+				j=0;
+				while(j<points.length){
+					if(points[j]<valeur){
+						points[j]=valeur;
+						
+						if(res.size()<5){
+							res.add(j,p2);
+						}
+						else{
+							res.remove(res.get(j));
+							res.add(j, p2);
+						}
+						j=points.length;
+					}
+					j+=1;
+				}
+			}
+		}
+		return res;
+	}
+	public static void main(String[] args) throws IOException {
+		GestionDonnee gd=new GestionDonnee();
+		Personne p1=gd.listePersonne.get(0);
 		Algo a=new Algo();
-		System.out.println(a.match(p1, p2));
 
 	}
 

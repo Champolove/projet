@@ -66,7 +66,7 @@ public class GestionDonnee {
 						compteur[3]+=1;
 					}
 				}
-				String np=perso.prenom+" "+perso.nom;
+				String np=perso.nom+" "+perso.prenom;
 				dicoPersonne.put(np,perso);
 				this.listePersonne.add(perso);
 				j+=1;
