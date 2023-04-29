@@ -131,9 +131,7 @@ public class Main extends Application {
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY); 
         } 
     } 
-	}
-	
-
+}
 	@Override
 	public void start(Stage primaryStage) {
 		try {
