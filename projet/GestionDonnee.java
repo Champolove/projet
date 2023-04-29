@@ -1,9 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.HashMap;
 
 public class GestionDonnee {
@@ -42,51 +39,38 @@ public class GestionDonnee {
 
 	public GestionDonnee() throws IOException {
 		int[] compteur={0,0,0,0};
-		ArrayList<ArrayList<String>> url=new ArrayList<ArrayList<String>>();
-		ArrayList<String> currentArray=new ArrayList<String>();
-		try {
-			File file=new File("C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\fichierUrl.txt");
-			Scanner myReader = new Scanner(file);
-			while (myReader.hasNextLine()) {
-			  String data = myReader.nextLine();
-			  if(data.charAt(0)!='X'){
-				currentArray.add(data);
-			  }
-			  else{
-				url.add(currentArray);
-				currentArray=new ArrayList<String>();
-			  }
-			}
-			myReader.close();
-		  } catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
-		  }
-		for(int i=0;i<50;i++) {
-			Personne perso=new creePersonne().p;
-			if(perso.age<50){
-				if(perso.sexe=="1"){
-					perso.URLPhoto=url.get(0).get(compteur[0]);
-					compteur[0]+=1;
-				}
+		int j=0;
+		while(j<50){
+			try{
+				Personne perso=new creePersonne().p;
+				if(perso.age<50){
+					if(perso.sexe=="1"){
+						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
+						compteur[0]+=1;
+					}
 				else{
-					perso.URLPhoto=url.get(2).get(compteur[2]);
+					perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-young-adult"+compteur[2]+".png";
 					compteur[2]+=1;
 				}
-			}
-			else{
-				if(perso.sexe=="1"){
-					perso.URLPhoto=url.get(1).get(compteur[1]);
-					compteur[1]+=1;
 				}
 				else{
-					perso.URLPhoto=url.get(3).get(compteur[3]);
-					compteur[3]+=1;
+					if(perso.sexe=="1"){
+						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-adult"+compteur[1]+".png";
+						compteur[1]+=1;
+					}
+					else{
+						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-adult"+compteur[3]+".png";
+						compteur[3]+=1;
+					}
 				}
+				String np=perso.prenom+" "+perso.nom;
+				dicoPersonne.put(np,perso);
+				this.listePersonne.add(perso);
+				j+=1;
 			}
-			String np=perso.prenom+" "+perso.nom;
-			dicoPersonne.put(np,perso);
-			this.listePersonne.add(perso);
+			catch (IndexOutOfBoundsException e){
+				
+			}
 		}
 	}
 }

@@ -19,6 +19,9 @@ import javafx.event.EventHandler;
 import javafx.scene.text.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Main extends Application {
 	
@@ -37,8 +40,9 @@ public class Main extends Application {
 	public class afficheProfil{
 		ImageView imagePersonne = new ImageView();
 		Label prenomNom;
-		public afficheProfil(Personne p,Group root){
-			imagePersonne.setImage(new Image(p.URLPhoto));
+		public afficheProfil(Personne p,Group root) throws FileNotFoundException{
+			InputStream stream = new FileInputStream(p.URLPhoto);
+			imagePersonne.setImage(new Image(stream));
 			imagePersonne.setX(170);
 			imagePersonne.setY(20);
 			imagePersonne.setFitWidth(200);
@@ -50,8 +54,10 @@ public class Main extends Application {
 			root.getChildren().add(prenomNom);
 			root.getChildren().add(imagePersonne);
 		}
-		public void update(Personne p){
-			imagePersonne.setImage(new Image(p.URLPhoto));
+		public void update(Personne p) throws FileNotFoundException{
+			
+			InputStream stream = new FileInputStream(p.URLPhoto);
+			imagePersonne.setImage(new Image(stream));
 			prenomNom.setText("Nom: "+p.nom+"\n"+"Prenom: "+p.prenom);
 		}
 	}
@@ -86,7 +92,13 @@ public class Main extends Application {
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
-			comboBox.valueProperty().addListener(observable -> aP.update(gd.dicoPersonne.get(comboBox.getValue().toString())));
+			comboBox.valueProperty().addListener(observable -> {
+				try {
+					aP.update(gd.dicoPersonne.get(comboBox.getValue().toString()));
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			});
 			root.getChildren().add(comboBox);
 			primaryStage.setScene(scene);
 			primaryStage.show();

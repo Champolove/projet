@@ -26,7 +26,7 @@ for i in range(4):
 for i in range(len(LF)):
     for j,url in enumerate(LF[i]):
         r = requests.get(url, allow_redirects=True)
-        open(r'C:\Users\colin\Downloads\imagesProjet\\'+"photo-"+str(ListeSexe[i//2])+"-"+str(ListeAge[i%2])+str(j)+'.png', 'wb').write(r.content)
+        open(r'C:\Users\colin\Documents\GitHub\projet\projet\images\\'+"photo-"+str(ListeSexe[i//2])+"-"+str(ListeAge[i%2])+str(j)+'.png', 'wb').write(r.content)
 
 """
 public class celldefill extends ListCell<Personne>{
