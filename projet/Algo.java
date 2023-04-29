@@ -36,7 +36,6 @@ public class Algo {
 				while(j<points.length){
 					if(points[j]<valeur){
 						points[j]=valeur;
-						
 						if(res.size()<5){
 							res.add(j,p2);
 						}
