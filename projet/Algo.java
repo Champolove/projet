@@ -17,7 +17,7 @@ public class Algo {
 			}
 			else {
 				if(0<=i && i<2) {
-					return -10;
+					return -100;
 				}
 				somme-=1*prio[i];
 			}
