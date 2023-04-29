@@ -43,7 +43,7 @@ public class Main extends Application {
 	        super.updateItem(item, empty);
 	        setText(null);
 	        if (!empty && item != null) {
-	            final String text = String.format("%s %s", item.prenom, item.nom);
+	            final String text = String.format("%s %s", item.nom, item.prenom);
 	            setText(text);
 	        }
 	    }
@@ -118,17 +118,18 @@ public class Main extends Application {
         setText(null); 
         setContentDisplay(ContentDisplay.LEFT); 
         if (!empty && item != null) {
-            labelNP.setText("nom: "+item.nom+"\nprenom: "+item.prenom);
 			try {
+				labelNP.setText("nom: "+item.nom+"\nprenom: "+item.prenom);
 				InputStream stream = new FileInputStream(item.URLPhoto);
 				imagePersonne.setImage(new Image(stream));
+				labelAge.setText(String.format("%d ans", item.age)); 
+				setText(null); 
+				setGraphic(content); 
+				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			labelAge.setText(String.format("%d ans", item.age)); 
-            setText(null); 
-            setGraphic(content); 
-            setContentDisplay(ContentDisplay.GRAPHIC_ONLY); 
+			 
         } 
     } 
 }
@@ -163,7 +164,6 @@ public class Main extends Application {
 				} catch (FileNotFoundException e1) {
 					
 				}catch(java.lang.NullPointerException e1){
-					
 				}
 			});
 			//côté droit
@@ -179,9 +179,7 @@ public class Main extends Application {
 				try {
 					aP2.update(gd.dicoPersonne.get(comboBox2.getValue().toString()));
 				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
 				}catch(java.lang.NullPointerException e1){
-					
 				}
 			});
 			comboBox2.setLayoutX(scene.getWidth()-300);
@@ -217,14 +215,12 @@ public class Main extends Application {
 					aP.update(p);
 					}
 				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
 				}catch(java.lang.NullPointerException e1){
 				}
 			 });
 			root.getChildren().addAll(textField1,buttonRechercheinv);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
 		}
 	}
 	public static void main(String[] args) {
