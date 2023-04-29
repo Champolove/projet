@@ -19,14 +19,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.text.Font;
+
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Main extends Application {
@@ -68,63 +72,64 @@ public class Main extends Application {
 		}
 	}
 
-	public class celldefill extends ListCell<Personne>{
+	public class RichCarListCell extends ListCell<Personne> { 
 		private final GridPane gridPane = new GridPane(); 
-    	private final Label nP = new Label(); 
-    	private final Label descriptionLabel = new Label(); 
-    	private final ImageView imagePersonne = new ImageView(); 
-    	private final AnchorPane content = new AnchorPane(); 
+		private final Label labelNP = new Label(); 
+		private final Label labelAge = new Label(); 
+		private final ImageView imagePersonne = new ImageView(); 
+		private final AnchorPane content = new AnchorPane(); 
+	
+    public RichCarListCell() { 
+        imagePersonne.setFitWidth(75); 
+        imagePersonne.setPreserveRatio(true); 
+        GridPane.setConstraints(imagePersonne, 0, 0, 1, 3); 
+        GridPane.setValignment(imagePersonne, VPos.TOP); 
+        // 
+        labelNP.setStyle("-fx-font-size: 1.5em;"); 
+        GridPane.setConstraints(labelNP, 1, 0); 
 
-		public celldefill(){
-			imagePersonne.setFitWidth(75); 
-			imagePersonne.setPreserveRatio(true); 
-			GridPane.setConstraints(imagePersonne, 0, 0, 1, 3); 
-			GridPane.setValignment(imagePersonne, VPos.TOP);  
-			// 
-			nP.setStyle("-fx-font-size: 0.9em; -fx-font-style: italic; -fx-opacity: 0.5;"); 
-			GridPane.setConstraints(nP, 2, 0); 
-			// 
-			GridPane.setConstraints(descriptionLabel, 1, 1); 
-			GridPane.setColumnSpan(descriptionLabel, Integer.MAX_VALUE); 
-			//         
-			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
-			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.LEFT, true)); 
-			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
-			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
-			gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
-			gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
-			gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, VPos.CENTER, true)); 
-			gridPane.setHgap(6); 
-			gridPane.setVgap(6); 
-			gridPane.getChildren().setAll(imagePersonne, nP, descriptionLabel); 
-			AnchorPane.setTopAnchor(gridPane, 0d); 
-			AnchorPane.setLeftAnchor(gridPane, 0d); 
-			AnchorPane.setBottomAnchor(gridPane, 0d); 
-			AnchorPane.setRightAnchor(gridPane, 0d); 
-			content.getChildren().add(gridPane); 
-    	} 
-
-		@Override 
-    	protected void updateItem(Personne perso,boolean empty) { 
-			super.updateItem(perso,true); 
-			setGraphic(null); 
-			setText(null); 
-			setContentDisplay(ContentDisplay.LEFT); 
-			if (!empty && perso != null) { 
-				nP.setText(perso.nom+" "+perso.prenom); 
-				try{
-					InputStream stream = new FileInputStream(perso.URLPhoto);
-					imagePersonne.setImage(new Image(stream));
-				}catch (FileNotFoundException e){
-					System.out.println(perso.URLPhoto);
-				}
-				String[] sex={"homme","femme"};
-				descriptionLabel.setText(String.format("sexe: %s, aime: %s", sex[Integer.valueOf(perso.sexe)], sex[Integer.valueOf(perso.attirance)])); 
-				setText(null); 
-				setGraphic(content); 
-				setContentDisplay(ContentDisplay.GRAPHIC_ONLY); 
-			} 
-		}
+        // 
+        labelAge.setStyle("-fx-opacity: 0.75;"); 
+        GridPane.setConstraints(labelAge, 1, 1); 
+        GridPane.setColumnSpan(labelAge, Integer.MAX_VALUE); 
+        //         
+        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
+        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.LEFT, true)); 
+        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
+        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
+        gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
+        gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
+        gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, VPos.CENTER, true)); 
+        gridPane.setHgap(6); 
+        gridPane.setVgap(6); 
+        gridPane.getChildren().setAll(imagePersonne, labelNP, labelAge); 
+        AnchorPane.setTopAnchor(gridPane, 0d); 
+        AnchorPane.setLeftAnchor(gridPane, 0d); 
+        AnchorPane.setBottomAnchor(gridPane, 0d); 
+        AnchorPane.setRightAnchor(gridPane, 0d); 
+        content.getChildren().add(gridPane); 
+    } 
+  
+    @Override 
+    protected void updateItem(Personne item, boolean empty) { 
+        super.updateItem(item, empty); 
+        setGraphic(null); 
+        setText(null); 
+        setContentDisplay(ContentDisplay.LEFT); 
+        if (!empty && item != null) { 
+            labelNP.setText("prenom: "+item.prenom+"\nnom: "+item.nom);
+			try {
+				InputStream stream = new FileInputStream(item.URLPhoto);
+				imagePersonne.setImage(new Image(stream));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			labelAge.setText(String.format("%d ans", item.age)); 
+            setText(null); 
+            setGraphic(content); 
+            setContentDisplay(ContentDisplay.GRAPHIC_ONLY); 
+        } 
+    } 
 	}
 
 	@Override
@@ -153,7 +158,7 @@ public class Main extends Application {
 			afficheProfil aP=new afficheProfil(gd.listePersonne.get(0), root);
 			comboBox.setButtonCell(new cellSelect());
 			comboBox.setValue(gd.listePersonne.get(0));
-			comboBox.setCellFactory(listView -> new celldefill()); //changer ici pour les cases affichées
+			comboBox.setCellFactory(listView -> new RichCarListCell()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}

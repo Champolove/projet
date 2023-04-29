@@ -35,7 +35,7 @@ public class GestionDonnee {
 				prenom=prenomF[r.nextInt(prenomF.length)];
 				attirance=choixSexe[r.nextInt(100)/90];
 			}
-			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(47)+18,sexe,attirance,String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)));
+			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(32)+18,sexe,attirance,String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)));
 		}
 	}
 
@@ -46,7 +46,7 @@ public class GestionDonnee {
 		while(j<50){
 			try{
 				Personne perso=new creePersonne().p;
-				if(perso.age<50){
+				if(perso.age<40){
 					if(perso.sexe=="1"){
 						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
 						compteur[0]+=1;
