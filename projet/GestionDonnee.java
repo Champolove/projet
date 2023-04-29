@@ -26,13 +26,16 @@ public class GestionDonnee {
 			Random r=new Random();
 			String sexe=choixSexe[r.nextInt(2)];
 			String prenom;
+			String attirance;
 			if(sexe=="0") {
 				prenom=prenomH[r.nextInt(prenomH.length)];
+				attirance=choixSexe[1-r.nextInt(100)/90];
 			}
 			else {
 				prenom=prenomF[r.nextInt(prenomF.length)];
+				attirance=choixSexe[r.nextInt(100)/90];
 			}
-			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(47)+18,sexe,choixSexe[r.nextInt(2)],String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)));
+			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(47)+18,sexe,attirance,String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)));
 		}
 	}
 

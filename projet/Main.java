@@ -3,7 +3,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -13,9 +13,15 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
 import javafx.event.EventHandler;
-
-
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.text.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -37,6 +43,7 @@ public class Main extends Application {
 	        }
 	    }
 	}
+	//change l'image de la personne de gauche	
 	public class afficheProfil{
 		ImageView imagePersonne = new ImageView();
 		Label prenomNom;
@@ -55,10 +62,68 @@ public class Main extends Application {
 			root.getChildren().add(imagePersonne);
 		}
 		public void update(Personne p) throws FileNotFoundException{
-			
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
 			prenomNom.setText("Nom: "+p.nom+"\n"+"Prenom: "+p.prenom);
+		}
+	}
+
+	public class celldefill extends ListCell<Personne>{
+		private final GridPane gridPane = new GridPane(); 
+    	private final Label nP = new Label(); 
+    	private final Label descriptionLabel = new Label(); 
+    	private final ImageView imagePersonne = new ImageView(); 
+    	private final AnchorPane content = new AnchorPane(); 
+
+		public celldefill(){
+			imagePersonne.setFitWidth(75); 
+			imagePersonne.setPreserveRatio(true); 
+			GridPane.setConstraints(imagePersonne, 0, 0, 1, 3); 
+			GridPane.setValignment(imagePersonne, VPos.TOP);  
+			// 
+			nP.setStyle("-fx-font-size: 0.9em; -fx-font-style: italic; -fx-opacity: 0.5;"); 
+			GridPane.setConstraints(nP, 2, 0); 
+			// 
+			GridPane.setConstraints(descriptionLabel, 1, 1); 
+			GridPane.setColumnSpan(descriptionLabel, Integer.MAX_VALUE); 
+			//         
+			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
+			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.LEFT, true)); 
+			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
+			gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
+			gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
+			gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
+			gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, VPos.CENTER, true)); 
+			gridPane.setHgap(6); 
+			gridPane.setVgap(6); 
+			gridPane.getChildren().setAll(imagePersonne, nP, descriptionLabel); 
+			AnchorPane.setTopAnchor(gridPane, 0d); 
+			AnchorPane.setLeftAnchor(gridPane, 0d); 
+			AnchorPane.setBottomAnchor(gridPane, 0d); 
+			AnchorPane.setRightAnchor(gridPane, 0d); 
+			content.getChildren().add(gridPane); 
+    	} 
+
+		@Override 
+    	protected void updateItem(Personne perso,boolean empty) { 
+			super.updateItem(perso,true); 
+			setGraphic(null); 
+			setText(null); 
+			setContentDisplay(ContentDisplay.LEFT); 
+			if (!empty && perso != null) { 
+				nP.setText(perso.nom+" "+perso.prenom); 
+				try{
+					InputStream stream = new FileInputStream(perso.URLPhoto);
+					imagePersonne.setImage(new Image(stream));
+				}catch (FileNotFoundException e){
+					System.out.println(perso.URLPhoto);
+				}
+				String[] sex={"homme","femme"};
+				descriptionLabel.setText(String.format("sexe: %s, aime: %s", sex[Integer.valueOf(perso.sexe)], sex[Integer.valueOf(perso.attirance)])); 
+				setText(null); 
+				setGraphic(content); 
+				setContentDisplay(ContentDisplay.GRAPHIC_ONLY); 
+			} 
 		}
 	}
 
@@ -88,7 +153,7 @@ public class Main extends Application {
 			afficheProfil aP=new afficheProfil(gd.listePersonne.get(0), root);
 			comboBox.setButtonCell(new cellSelect());
 			comboBox.setValue(gd.listePersonne.get(0));
-			comboBox.setCellFactory(listView -> new cellSelect()); //changer ici pour les cases affichées
+			comboBox.setCellFactory(listView -> new celldefill()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
