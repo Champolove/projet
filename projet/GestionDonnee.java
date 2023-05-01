@@ -10,7 +10,11 @@ public class GestionDonnee {
 		chien,
 		tortue,
 		lapin,
-		serpent
+		serpent,
+		poisson,
+		cheval,
+		chevre
+		
 	}
 	ArrayList<Personne> listePersonne=new ArrayList<>();
 	public class creePersonne {
