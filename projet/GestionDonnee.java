@@ -16,6 +16,25 @@ public class GestionDonnee {
 		chevre
 		
 	}
+	static enum hobbies{
+		jardinage,
+		classe,
+		cuisine,
+		dance,
+		dessin,
+		couture,
+		photographie,
+		jeuxvideo,
+		sport,
+		peinture,
+		theatre,
+		lecture,
+		diy,
+		musique,
+		peche,
+		voyage
+		
+	}
 	ArrayList<Personne> listePersonne=new ArrayList<>();
 	public class creePersonne {
 		String[] prenomF= {"Charlotte", "Francis", "Karen", "Ethel", "Catherine", "Rhonda", "Rene", "Virginia", "Elizabeth", "Samantha", "Elisha", "Tiffany", "Amy", "Erika", "Shelley", "Patricia", "Sharon", "Sally", "Kimberly", "Anna", "Gisele", "Dinah", "Ashley", "Dee", "Kimberly", "Jennifer", "Christie", "Ana", "Lynda", "Blanche", "Gladys", "Lu", "Beverly", "Kimberly", "Kathleen", "Claudia", "Nanette", "Debra", "Grace", "Lisa", "Kenna", "Linda", "Pat", "Angelica", "Laura", "Joan", "Marie", "Joanne", "Ana", "Gloria", "Stefanie", "Ella", "Nicole", "Sylvia", "Charlotte", "Carol", "Melissa", "Anne", "Leslie", "Candace", "Joy", "Vernita", "Lynne", "Eleanor", "Julie", "Iris", "Christina", "Audrey", "Linda", "Patricia", "Michelle", "Nichole", "Julia", "Deborah", "Tiffany", "Marion", "Ester", "Rosemary", "April", "Rebecca", "Michelle", "Sarah", "Misty", "Kim", "Jeannie", "Helen", "Vera", "Velva", "Nancy", "Marianne", "Jean", "Evelyn", "Shana", "Dorothy", "Irma", "Sandra", "Susan", "Nora", "Mary", "Wanda"};
