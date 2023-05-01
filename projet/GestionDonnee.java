@@ -18,7 +18,6 @@ public class GestionDonnee {
 	}
 	static enum hobbies{
 		jardinage,
-		classe,
 		cuisine,
 		dance,
 		dessin,
