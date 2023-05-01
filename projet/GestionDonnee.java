@@ -32,7 +32,6 @@ public class GestionDonnee {
 		musique,
 		peche,
 		voyage,
-		prospection
 		
 	}
 	ArrayList<Personne> listePersonne=new ArrayList<>();
