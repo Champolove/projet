@@ -53,13 +53,17 @@ public class Main extends Application {
 		ImageView imagePersonne = new ImageView();
 		Label labelDescription;
 		public afficheProfil(Personne p,Group root,int multi) throws FileNotFoundException{
+			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
 			imagePersonne.setX(320+1000*multi);
 			imagePersonne.setY(20);
 			imagePersonne.setFitWidth(200);
 			imagePersonne.setPreserveRatio(true);
-			labelDescription=new Label("nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age);
+			for(String valeur: p.stat){
+				s+=valeur;
+;			}
+			labelDescription=new Label(s);
 			labelDescription.setTranslateX(320+1000*multi);
 			labelDescription.setTranslateY(230);
 			labelDescription.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 18));
@@ -67,9 +71,13 @@ public class Main extends Application {
 			root.getChildren().add(imagePersonne);
 		}
 		public void update(Personne p) throws FileNotFoundException{
+			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
-			labelDescription.setText("nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age);
+			for(String valeur: p.stat){
+				s+=valeur;
+;			}
+			labelDescription.setText(s);
 		}
 	}
 
@@ -88,7 +96,6 @@ public class Main extends Application {
         // 
         labelNP.setStyle("-fx-font-size: 1.5em;"); 
         GridPane.setConstraints(labelNP, 1, 0); 
-
         // 
         labelAge.setStyle("-fx-opacity: 0.9; -fx-font-size: 1.3em;"); 
         GridPane.setConstraints(labelAge, 1, 1); 
@@ -145,7 +152,7 @@ public class Main extends Application {
 			        //System.out.println("mouse click detected! " + mouseEvent.getSource());
 			    }
 			});
-			primaryStage.setTitle("Test javafx");
+			primaryStage.setTitle("Champolove");
 			Button b=new Button();
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();

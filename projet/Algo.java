@@ -8,15 +8,14 @@ public class Algo {
 	}
 	public int match(Personne p1,Personne p2) {
 		int somme=0;
-		String[] p1H=p1.hash.split("");
-		String[] p2H=p2.hashMatch.split("");
-		int[] prio= {1,1,2,2,1,1,1,0};
-		for(int i=0;i<p1H.length;i++) {
-			if(p1H[i].equals(p2H[i])) {
+
+		int[] prio= {1,1,2,2,1,1,1,0,1,1};
+		for(int i=0;i<p1.hash.size();i++) {
+			if(p1.hash.get(i).equals(p2.hashMatch.get(i))) {
 				somme+=1*prio[i];
 			}
 			else {
-				if(0<=i && i<2) {
+				if(i<2) {
 					return -100;
 				}
 				somme-=1*prio[i];
@@ -26,7 +25,7 @@ public class Algo {
 	}
 	public ArrayList<Personne> listeMatch(Personne p1,ArrayList<Personne> lp){
 		ArrayList<Personne> res=new ArrayList<Personne>();
-		int[] points={-1,-1,-1,-1,-1};
+		int[] points={-5,-5,-5,-5,-5};
 		int j;
 		for(int i=0;i<lp.size();i++){
 			Personne p2=lp.get(i);
@@ -52,9 +51,6 @@ public class Algo {
 		return res;
 	}
 	public static void main(String[] args) throws IOException {
-		GestionDonnee gd=new GestionDonnee();
-		Personne p1=gd.listePersonne.get(0);
-		Algo a=new Algo();
 
 	}
 
