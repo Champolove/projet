@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -276,12 +277,19 @@ public class Main extends Application {
 		root.getChildren().add(rechercheHobby);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	} 
-
-
-		catch(Exception e) {
+	 
+		CheckBox checkBox = new CheckBox("a voir");
+		checkBox.setOnAction(e -> {
+         if (checkBox.isSelected()) {
+             System.out.println("oui");
+		}else{
+			System.out.println("autre");
 		}
-	}
+				});
+				}
+			catch(Exception e) {
+				}
+		}
 
 	public static void main(String[] args) {
 		launch(args);
