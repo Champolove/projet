@@ -268,7 +268,14 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	} 
-
+	CheckBox checkBox = new CheckBox("a voir");
+	checkBox.setOnAction(e -> {
+         if (checkBox.isSelected()) {
+             System.out.println("oui");
+	}else{
+		System.out.println("autre");
+	}
+	});
 
 		catch(Exception e) {
 		}
