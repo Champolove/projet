@@ -14,7 +14,6 @@ public class GestionDonnee {
 		poisson,
 		cheval,
 		chevre
-		
 	}
 	static enum hobbies{
 		jardinage,
@@ -31,8 +30,7 @@ public class GestionDonnee {
 		diy,
 		musique,
 		peche,
-		voyage,
-		
+		voyage
 	}
 	ArrayList<Personne> listePersonne=new ArrayList<>();
 	public class creePersonne {
