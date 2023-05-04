@@ -126,7 +126,7 @@ public class Main extends Application {
         setContentDisplay(ContentDisplay.LEFT); 
         if (!empty && item != null) {
 			try {
-				labelNP.setText("nom: "+item.nom+"\nprenom: "+item.prenom);
+				labelNP.setText("Nom: "+item.nom+"\nPrenom: "+item.prenom);
 				InputStream stream = new FileInputStream(item.URLPhoto);
 				imagePersonne.setImage(new Image(stream));
 				labelAge.setText(String.format("%d ans", item.age)); 
