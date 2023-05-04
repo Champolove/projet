@@ -38,7 +38,7 @@ public class Personne {
 		hashMatch=att+s+aD+aA+aL+aS+aJV;
 	}
 	public String toString() {
-		return this.prenom+" "+this.nom;
+		return this.nom+" "+this.prenom;
 	}
 
 }
