@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Main extends Application {
 	
@@ -48,18 +49,34 @@ public class Main extends Application {
 	        }
 	    }
 	}
+	public class cellChoix extends ListCell<String> {
+
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            setText(null);
+            if (!empty && item != null) {
+                final String text = String.format("%s",item);
+                setText(text);
+            }
+        }
+    }
 	//change l'image de la personne de gauche	
 	public class afficheProfil{
 		ImageView imagePersonne = new ImageView();
 		Label labelDescription;
 		public afficheProfil(Personne p,Group root,int multi) throws FileNotFoundException{
+			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
 			imagePersonne.setX(320+1000*multi);
 			imagePersonne.setY(20);
 			imagePersonne.setFitWidth(200);
 			imagePersonne.setPreserveRatio(true);
-			labelDescription=new Label("nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age);
+			for(String valeur: p.stat){
+				s+=valeur;
+;			}
+			labelDescription=new Label(s);
 			labelDescription.setTranslateX(320+1000*multi);
 			labelDescription.setTranslateY(230);
 			labelDescription.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 18));
@@ -67,9 +84,13 @@ public class Main extends Application {
 			root.getChildren().add(imagePersonne);
 		}
 		public void update(Personne p) throws FileNotFoundException{
+			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
-			labelDescription.setText("nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age);
+			for(String valeur: p.stat){
+				s+=valeur;
+;			}
+			labelDescription.setText(s);
 		}
 	}
 
@@ -88,7 +109,6 @@ public class Main extends Application {
         // 
         labelNP.setStyle("-fx-font-size: 1.5em;"); 
         GridPane.setConstraints(labelNP, 1, 0); 
-
         // 
         labelAge.setStyle("-fx-opacity: 0.9; -fx-font-size: 1.3em;"); 
         GridPane.setConstraints(labelAge, 1, 1); 
@@ -119,7 +139,7 @@ public class Main extends Application {
         setContentDisplay(ContentDisplay.LEFT); 
         if (!empty && item != null) {
 			try {
-				labelNP.setText("nom: "+item.nom+"\nprenom: "+item.prenom);
+				labelNP.setText("Nom: "+item.nom+"\nPrenom: "+item.prenom);
 				InputStream stream = new FileInputStream(item.URLPhoto);
 				imagePersonne.setImage(new Image(stream));
 				labelAge.setText(String.format("%d ans", item.age)); 
@@ -145,7 +165,7 @@ public class Main extends Application {
 			        //System.out.println("mouse click detected! " + mouseEvent.getSource());
 			    }
 			});
-			primaryStage.setTitle("Test javafx");
+			primaryStage.setTitle("Champolove");
 			Button b=new Button();
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();
@@ -185,7 +205,7 @@ public class Main extends Application {
 			comboBox2.setLayoutX(scene.getWidth()-300);
 			b.setLayoutX(scene.getWidth()/2);
 			b.setLayoutY(scene.getHeight()/2);
-			b.setText("matching");
+			b.setText("Matching");
 			b.setOnAction(e-> {
 				ArrayList<Personne> p=algo.listeMatch(comboBox.getValue(), gd.listePersonne);
 				comboBox2.getItems().setAll(p.get(0));
@@ -219,10 +239,16 @@ public class Main extends Application {
 				}
 			 });
 			root.getChildren().addAll(textField1,buttonRechercheinv);
-			
-		} catch(Exception e) {
+
+		HashSet<String> listeRecherche = new HashSet<>();
+		ComboBox<String> rechercheAnimal= new ComboBox<>();
+		ComboBox<String> rechercheHobby= new ComboBox<>();
+			} 
+		
+		catch(Exception e) {
 		}
 	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}

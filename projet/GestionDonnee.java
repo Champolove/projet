@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 public class GestionDonnee {
 	HashMap<String,Personne> dicoPersonne=new HashMap<String,Personne>();
+	static HashMap<String,Integer> dicoAnimal=new HashMap<>();
+	static HashMap<String,Integer> dicoHobbies=new HashMap<>();
 	static enum animal{
 		chat,
 		chien,
@@ -22,7 +24,6 @@ public class GestionDonnee {
 		dessin,
 		couture,
 		photographie,
-		jeuxvideo,
 		sport,
 		peinture,
 		theatre,
@@ -32,6 +33,7 @@ public class GestionDonnee {
 		peche,
 		voyage
 	}
+	
 	ArrayList<Personne> listePersonne=new ArrayList<>();
 	public class creePersonne {
 		String[] prenomF= {"Charlotte", "Francis", "Karen", "Ethel", "Catherine", "Rhonda", "Rene", "Virginia", "Elizabeth", "Samantha", "Elisha", "Tiffany", "Amy", "Erika", "Shelley", "Patricia", "Sharon", "Sally", "Kimberly", "Anna", "Gisele", "Dinah", "Ashley", "Dee", "Kimberly", "Jennifer", "Christie", "Ana", "Lynda", "Blanche", "Gladys", "Lu", "Beverly", "Kimberly", "Kathleen", "Claudia", "Nanette", "Debra", "Grace", "Lisa", "Kenna", "Linda", "Pat", "Angelica", "Laura", "Joan", "Marie", "Joanne", "Ana", "Gloria", "Stefanie", "Ella", "Nicole", "Sylvia", "Charlotte", "Carol", "Melissa", "Anne", "Leslie", "Candace", "Joy", "Vernita", "Lynne", "Eleanor", "Julie", "Iris", "Christina", "Audrey", "Linda", "Patricia", "Michelle", "Nichole", "Julia", "Deborah", "Tiffany", "Marion", "Ester", "Rosemary", "April", "Rebecca", "Michelle", "Sarah", "Misty", "Kim", "Jeannie", "Helen", "Vera", "Velva", "Nancy", "Marianne", "Jean", "Evelyn", "Shana", "Dorothy", "Irma", "Sandra", "Susan", "Nora", "Mary", "Wanda"};
@@ -55,12 +57,34 @@ public class GestionDonnee {
 				prenom=prenomF[r.nextInt(prenomF.length)];
 				attirance=choixSexe[r.nextInt(100)/90];
 			}
-			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(32)+18,sexe,attirance,String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)));
+			String aA=String.valueOf(String.valueOf(animal.values()[new Random().nextInt(animal.values().length)]));
+			String ad=String.valueOf(String.valueOf(animal.values()[new Random().nextInt(animal.values().length)]));
+			if(aA.equals(ad)){
+				ad=null;
+			}
+			String h=String.valueOf(String.valueOf(hobbies.values()[new Random().nextInt(hobbies.values().length)]));
+			String hm=String.valueOf(String.valueOf(hobbies.values()[new Random().nextInt(hobbies.values().length)]));
+			if(h.equals(hm)){
+				hm=null;
+			}
+			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(32)+18,sexe,attirance,aA,ad,String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),h,hm);
 		}
 	}
 
 
 	public GestionDonnee() throws IOException {
+		int cpt=0;
+        for(GestionDonnee.animal s: animal.values()){
+            String a=s.toString();
+            dicoAnimal.put(a,cpt);
+            cpt+=1;
+        }
+		cpt=0;
+        for(GestionDonnee.hobbies s: hobbies.values()){
+            String a=s.toString();
+            dicoHobbies.put(a,cpt-7);
+            cpt+=1;
+        }
 		int[] compteur={0,0,0,0};
 		int j=0;
 		while(j<50){
@@ -68,21 +92,21 @@ public class GestionDonnee {
 				Personne perso=new creePersonne().p;
 				if(perso.age<40){
 					if(perso.sexe=="1"){
-						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
+						perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
 						compteur[0]+=1;
 					}
 				else{
-					perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-young-adult"+compteur[2]+".png";
+					perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-male-young-adult"+compteur[2]+".png";
 					compteur[2]+=1;
 				}
 				}
 				else{
 					if(perso.sexe=="1"){
-						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-adult"+compteur[1]+".png";
+						perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-female-adult"+compteur[1]+".png";
 						compteur[1]+=1;
 					}
 					else{
-						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-adult"+compteur[3]+".png";
+						perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-male-adult"+compteur[3]+".png";
 						compteur[3]+=1;
 					}
 				}
@@ -91,6 +115,9 @@ public class GestionDonnee {
 				this.listePersonne.add(perso);
 				j+=1;
 			}
+
+			
+
 			catch (IndexOutOfBoundsException e){
 				
 			}
