@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Main extends Application {
 	
@@ -243,8 +244,22 @@ public class Main extends Application {
 		HashSet<String> listeRecherche = new HashSet<>();
 		ComboBox<String> rechercheAnimal= new ComboBox<>();
 		ComboBox<String> rechercheHobby= new ComboBox<>();
-			} 
-		
+		rechercheAnimal.setButtonCell(new cellChoix());
+		rechercheAnimal.setValue("chat");
+		rechercheAnimal.setCellFactory(listView -> new cellChoix());
+		for(Map.Entry s: gd.dicoAnimal.entrySet()) {
+   			 rechercheAnimal.getItems().addAll(String.valueOf(s)); ///setall à la place de addAll pour remplacer les valeurs
+				}
+		rechercheHobby.setValue("jardinage");
+		rechercheHobby.setCellFactory(listView -> new cellChoix());
+		for(Map.Entry s: gd.dicoHobbies.entrySet()) {
+				rechercheHobby.getItems().addAll(String.valueOf(s)); ///setall à la place de addAll pour remplacer les valeurs
+			}
+	
+			root.getChildren().addAll(rechercheAnimal,rechercheAnimal);
+	} 
+
+
 		catch(Exception e) {
 		}
 	}
