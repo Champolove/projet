@@ -92,21 +92,22 @@ public class GestionDonnee {
 				Personne perso=new creePersonne().p;
 				if(perso.age<40){
 					if(perso.sexe=="1"){
-						perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
+						//C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\
+						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
 						compteur[0]+=1;
 					}
 				else{
-					perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-male-young-adult"+compteur[2]+".png";
+					perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-young-adult"+compteur[2]+".png";
 					compteur[2]+=1;
 				}
 				}
 				else{
 					if(perso.sexe=="1"){
-						perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-female-adult"+compteur[1]+".png";
+						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-adult"+compteur[1]+".png";
 						compteur[1]+=1;
 					}
 					else{
-						perso.URLPhoto="C:\\Users\\Matthias\\Documents\\GitHub\\projet\\projet\\images\\photo-male-adult"+compteur[3]+".png";
+						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-adult"+compteur[3]+".png";
 						compteur[3]+=1;
 					}
 				}

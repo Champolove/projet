@@ -219,8 +219,7 @@ public class Main extends Application {
 			root.getChildren().add(b);
 			root.getChildren().add(comboBox);
 			root.getChildren().add(comboBox2);
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			
 			TextField textField1 = new TextField();
 			Button buttonRechercheinv = new Button("Recherche Inversée");
 			buttonRechercheinv.setTranslateX(scene.getWidth()/2-24);
@@ -240,23 +239,34 @@ public class Main extends Application {
 				}
 			 });
 			root.getChildren().addAll(textField1,buttonRechercheinv);
-
+		
 		HashSet<String> listeRecherche = new HashSet<>();
 		ComboBox<String> rechercheAnimal= new ComboBox<>();
 		ComboBox<String> rechercheHobby= new ComboBox<>();
+		
 		rechercheAnimal.setButtonCell(new cellChoix());
 		rechercheAnimal.setValue("chat");
 		rechercheAnimal.setCellFactory(listView -> new cellChoix());
-		for(Map.Entry s: gd.dicoAnimal.entrySet()) {
-   			 rechercheAnimal.getItems().addAll(String.valueOf(s)); ///setall à la place de addAll pour remplacer les valeurs
+		
+		for(Map.Entry s: GestionDonnee.dicoAnimal.entrySet()) {
+   			 rechercheAnimal.getItems().addAll(String.valueOf(s.getKey())); ///setall à la place de addAll pour remplacer les valeurs
 				}
+				
 		rechercheHobby.setValue("jardinage");
 		rechercheHobby.setCellFactory(listView -> new cellChoix());
-		for(Map.Entry s: gd.dicoHobbies.entrySet()) {
-				rechercheHobby.getItems().addAll(String.valueOf(s)); ///setall à la place de addAll pour remplacer les valeurs
+		
+		for(Map.Entry s: GestionDonnee.dicoHobbies.entrySet()) {
+				rechercheHobby.getItems().addAll(String.valueOf(s.getKey())); ///setall à la place de addAll pour remplacer les valeurs
 			}
-	
-			root.getChildren().addAll(rechercheAnimal,rechercheAnimal);
+		
+		rechercheHobby.setLayoutX(50);
+		rechercheHobby.setLayoutY(scene.getHeight()-400);
+		rechercheAnimal.setLayoutX(300);
+		rechercheAnimal.setLayoutY(scene.getHeight()-400);
+		root.getChildren().add(rechercheAnimal);
+		root.getChildren().add(rechercheHobby);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	} 
 
 

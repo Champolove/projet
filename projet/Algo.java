@@ -9,16 +9,26 @@ public class Algo {
 	public int match(Personne p1,Personne p2) {
 		int somme=0;
 
-		int[] prio= {1,1,2,2,1,1,1,0,1,1};
+		int[] prio= {1,1,3,3,1,1,1,0,1,1};
 		for(int i=0;i<p1.hash.size();i++) {
-			if(p1.hash.get(i).equals(p2.hashMatch.get(i))) {
-				somme+=1*prio[i];
-			}
-			else {
-				if(i<2) {
-					return -100;
+			if(i==2 || i==3){
+				if(p1.hash.get(i).equals(p2.hashMatch.get(i))) {
+					somme-=1*prio[i];
 				}
-				somme-=1*prio[i];
+				if(p1.hash.get(i).equals(p2.hash.get(i)) && i==2){
+					somme+=1*prio[i];
+				}
+			}
+			else{
+				if(p1.hash.get(i).equals(p2.hashMatch.get(i))) {
+					somme+=1*prio[i];
+				}
+				else {
+					if(i<2) {
+						return -100;
+					}
+					somme-=1*prio[i];
+				}
 			}
 		}
 		return somme;
