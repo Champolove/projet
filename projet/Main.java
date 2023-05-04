@@ -240,7 +240,7 @@ public class Main extends Application {
 			 });
 			root.getChildren().addAll(textField1,buttonRechercheinv);
 		
-		HashSet<String> listeRecherche = new HashSet<>();
+		String[] listeRecherche = {null,null,null,null,null,null,null,null};
 		ComboBox<String> rechercheAnimal= new ComboBox<>();
 		ComboBox<String> rechercheHobby= new ComboBox<>();
 		
@@ -263,6 +263,15 @@ public class Main extends Application {
 		rechercheHobby.setLayoutY(scene.getHeight()-400);
 		rechercheAnimal.setLayoutX(300);
 		rechercheAnimal.setLayoutY(scene.getHeight()-400);
+
+		rechercheHobby.valueProperty().addListener(observable -> {
+			listeRecherche[6]=rechercheHobby.getValue();
+		});
+		rechercheAnimal.valueProperty().addListener(observable -> {
+			listeRecherche[2]=rechercheAnimal.getValue();
+			
+		});
+
 		root.getChildren().add(rechercheAnimal);
 		root.getChildren().add(rechercheHobby);
 		primaryStage.setScene(scene);
