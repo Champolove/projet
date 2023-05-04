@@ -63,6 +63,7 @@ public class Main extends Application {
             }
         }
     }
+
 	//change l'image de la personne de gauche	
 	public class afficheProfil{
 		ImageView imagePersonne = new ImageView();
@@ -278,18 +279,21 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	 
-		CheckBox checkBox = new CheckBox("a voir");
-		checkBox.setOnAction(e -> {
-         if (checkBox.isSelected()) {
-             System.out.println("oui");
-		}else{
-			System.out.println("autre");
+		ComboBox cbLire = new ComboBox<>();
+		ComboBox cbJeuS= new ComboBox<>();
+		ComboBox cbJeuV = new ComboBox<>();
+		ComboBox cbEnfants = new ComboBox<>();
+		String[] choix = {"oui", "non", "non renseigne" };
+		
+	
+	
+	
+	}
+	
+		catch(Exception e) {
 		}
-				});
-				}
-			catch(Exception e) {
-				}
-		}
+	}
+
 
 	public static void main(String[] args) {
 		launch(args);
