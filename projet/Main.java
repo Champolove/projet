@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -34,7 +33,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
 
 public class Main extends Application {
@@ -76,19 +74,30 @@ public class Main extends Application {
 	public class afficheProfil{
 		ImageView imagePersonne = new ImageView();
 		Label labelDescription;
-		public afficheProfil(Personne p,Group root,int multi) throws FileNotFoundException{
+		public afficheProfil(Personne p,Group root,int multi,Scene scene) throws FileNotFoundException{
 			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
-			imagePersonne.setX(320+1000*multi);
-			imagePersonne.setY(20);
+			if(multi==1){
+				imagePersonne.setX(scene.getWidth()-550);
+			}
+			else{
+				imagePersonne.setX(320);
+			}
+			
+			imagePersonne.setY(30);
 			imagePersonne.setFitWidth(200);
 			imagePersonne.setPreserveRatio(true);
 			for(String valeur: p.stat){
 				s+=valeur;
 ;			}
 			labelDescription=new Label(s);
-			labelDescription.setTranslateX(320+1000*multi);
+			if(multi==1){
+				labelDescription.setTranslateX(scene.getWidth()-550);
+			}
+			else{
+				labelDescription.setTranslateX(320);
+			}
 			labelDescription.setTranslateY(230);
 			labelDescription.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 18));
 			root.getChildren().add(labelDescription);
@@ -182,7 +191,7 @@ public class Main extends Application {
 			GestionDonnee gd=new GestionDonnee();
 			//côté gauche
 			final ComboBox<Personne> comboBox = new ComboBox<Personne>();
-			afficheProfil aP=new afficheProfil(gd.listePersonne.get(0), root,0);
+			afficheProfil aP=new afficheProfil(gd.listePersonne.get(0), root,0,scene);
 			comboBox.setButtonCell(new cellSelect());
 			comboBox.setValue(gd.listePersonne.get(0));
 			comboBox.setCellFactory(listView -> new cellDefill()); //changer ici pour les cases affichées
@@ -199,7 +208,7 @@ public class Main extends Application {
 			});
 			//côté droit
 			final ComboBox<Personne> comboBox2 = new ComboBox<Personne>();
-			afficheProfil aP2=new afficheProfil(gd.listePersonne.get(1), root,1);
+			afficheProfil aP2=new afficheProfil(gd.listePersonne.get(1), root,1,scene);
 			comboBox2.setButtonCell(new cellSelect());
 			comboBox2.setValue(gd.listePersonne.get(29));
 			comboBox2.setCellFactory(listView -> new cellDefill()); //changer ici pour les cases affichées
