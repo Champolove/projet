@@ -30,8 +30,8 @@ public class Personne {
 		age=a;
 		sexe=s;
 		attirance=att;
-		animalAime=String.valueOf(GestionDonnee.dicoAnimal.get(aA));
-		animalDeteste=String.valueOf(GestionDonnee.dicoAnimal.get(aD));
+		animalAime=aA;
+		animalDeteste=aD;
 		aimeLire=aL;
 		aimeJouerS=aS;
 		aimeJouerJV=aJV;
@@ -41,8 +41,8 @@ public class Personne {
 		hetero=s!=att;
 		hash=new ArrayList<>();
 		hashMatch=new ArrayList<>();
-		hash.addAll(Arrays.asList(s,att,animalAime,animalDeteste,aL,aS,aJV,hobbi,hobbiM));
-		hashMatch.addAll(Arrays.asList(att,s,animalDeteste,animalAime,aL,aS,aJV,hobbiM,hobbi));
+		hash.addAll(Arrays.asList(s,att,String.valueOf(GestionDonnee.dicoAnimal.get(aA)),String.valueOf(GestionDonnee.dicoAnimal.get(aD)),aL,aS,aJV,aE,String.valueOf(GestionDonnee.dicoHobbies.get(h)),String.valueOf(GestionDonnee.dicoHobbies.get(hm))));
+		hashMatch.addAll(Arrays.asList(att,s,animalDeteste,animalAime,aL,aS,aJV,aE,hobbiM,hobbi));
 		stat=new ArrayList<String>();
 		if(aA!=null){
 			stat.add("\nAime: "+aA);

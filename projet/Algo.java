@@ -9,7 +9,7 @@ public class Algo {
 	public int match(Personne p1,Personne p2) {
 		int somme=0;
 
-		int[] prio= {1,1,3,3,1,1,1,0,1,1};
+		int[] prio= {1,1,5,5,1,1,1,0,1,1};
 		for(int i=0;i<p1.hash.size();i++) {
 			if(i==2 || i==3){
 				if(p1.hash.get(i).equals(p2.hashMatch.get(i))) {

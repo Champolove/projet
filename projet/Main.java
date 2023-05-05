@@ -38,7 +38,15 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class Main extends Application {
-	
+	public class createLabel{
+		public createLabel(int x,int y,Group root,String texte){
+			Label labelDesc=new Label(texte);
+			labelDesc.setTranslateX(x);
+			labelDesc.setTranslateY(y);
+			labelDesc.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+			root.getChildren().add(labelDesc);
+		}
+	}
 	public class cellSelect extends ListCell<Personne> {
 
 	    @Override
@@ -193,7 +201,7 @@ public class Main extends Application {
 			final ComboBox<Personne> comboBox2 = new ComboBox<Personne>();
 			afficheProfil aP2=new afficheProfil(gd.listePersonne.get(1), root,1);
 			comboBox2.setButtonCell(new cellSelect());
-			comboBox2.setValue(gd.listePersonne.get(1));
+			comboBox2.setValue(gd.listePersonne.get(29));
 			comboBox2.setCellFactory(listView -> new cellDefill()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox2.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
@@ -225,9 +233,9 @@ public class Main extends Application {
 			TextField textField1 = new TextField();
 			Button buttonRechercheinv = new Button("Recherche Inversée");
 			buttonRechercheinv.setTranslateX(scene.getWidth()/2-24);
-			buttonRechercheinv.setTranslateY(scene.getHeight()/2+100);
+			buttonRechercheinv.setTranslateY(scene.getHeight()/2+50);
 			textField1.setTranslateX(scene.getWidth()/2-40);
-			textField1.setTranslateY(scene.getHeight()/2+50);
+			textField1.setTranslateY(scene.getHeight()/2+100);
 			buttonRechercheinv.setOnAction(e -> {
 				try {
 					String name = textField1.getText();
@@ -242,58 +250,146 @@ public class Main extends Application {
 			 });
 			root.getChildren().addAll(textField1,buttonRechercheinv);
 		
-		String[] listeRecherche = {null,null,null,null,null,null,null,null};
-		ComboBox<String> rechercheAnimal= new ComboBox<>();
-		ComboBox<String> rechercheHobby= new ComboBox<>();
-		
-		rechercheAnimal.setButtonCell(new cellChoix());
-		rechercheAnimal.setValue("chat");
-		rechercheAnimal.setCellFactory(listView -> new cellChoix());
-		
-		for(Map.Entry s: GestionDonnee.dicoAnimal.entrySet()) {
-   			 rechercheAnimal.getItems().addAll(String.valueOf(s.getKey())); ///setall à la place de addAll pour remplacer les valeurs
+			String[] listeRecherche = {"non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné"};
+			ComboBox<String> rechercheAnimal= new ComboBox<>();
+			ComboBox<String> rechercheHobby= new ComboBox<>();
+			ComboBox<String> rechercheAnimalMoins= new ComboBox<>();
+			ComboBox<String> rechercheHobbyMoins= new ComboBox<>();
+			rechercheAnimal.setButtonCell(new cellChoix());
+			rechercheAnimal.setCellFactory(listView -> new cellChoix());
+			rechercheAnimalMoins.setButtonCell(new cellChoix());
+			rechercheAnimalMoins.setCellFactory(listView -> new cellChoix());
+			for(Map.Entry s: GestionDonnee.dicoAnimal.entrySet()) {
+				rechercheAnimal.getItems().addAll(String.valueOf(s.getKey())); 
+				rechercheAnimalMoins.getItems().addAll(String.valueOf(s.getKey()));
+					}
+			rechercheHobby.setCellFactory(listView -> new cellChoix());
+			rechercheHobbyMoins.setCellFactory(listView -> new cellChoix());
+			for(Map.Entry s: GestionDonnee.dicoHobbies.entrySet()) {
+					rechercheHobby.getItems().addAll(String.valueOf(s.getKey()));
+					rechercheHobbyMoins.getItems().addAll(String.valueOf(s.getKey()));
 				}
-				
-		rechercheHobby.setValue("jardinage");
-		rechercheHobby.setCellFactory(listView -> new cellChoix());
-		
-		for(Map.Entry s: GestionDonnee.dicoHobbies.entrySet()) {
-				rechercheHobby.getItems().addAll(String.valueOf(s.getKey())); ///setall à la place de addAll pour remplacer les valeurs
-			}
-		
-		rechercheHobby.setLayoutX(50);
-		rechercheHobby.setLayoutY(scene.getHeight()-400);
-		rechercheAnimal.setLayoutX(300);
-		rechercheAnimal.setLayoutY(scene.getHeight()-400);
-
-		rechercheHobby.valueProperty().addListener(observable -> {
-			listeRecherche[6]=rechercheHobby.getValue();
-		});
-		rechercheAnimal.valueProperty().addListener(observable -> {
-			listeRecherche[2]=rechercheAnimal.getValue();
+			rechercheHobby.setLayoutX(50);
+			rechercheHobby.setLayoutY(scene.getHeight()-380);
+			rechercheAnimal.setLayoutX(300);
+			rechercheAnimal.setLayoutY(scene.getHeight()-380);
+			rechercheHobbyMoins.setLayoutX(50);
+			rechercheHobbyMoins.setLayoutY(scene.getHeight()-310);
+			rechercheAnimalMoins.setLayoutX(300);
+			rechercheAnimalMoins.setLayoutY(scene.getHeight()-310);
+			rechercheHobby.valueProperty().addListener(observable -> {
+				listeRecherche[0]=rechercheHobby.getValue();
+			});
 			
-		});
-
-		root.getChildren().add(rechercheAnimal);
-		root.getChildren().add(rechercheHobby);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-	 
-		ComboBox cbLire = new ComboBox<>();
-		ComboBox cbJeuS= new ComboBox<>();
-		ComboBox cbJeuV = new ComboBox<>();
-		ComboBox cbEnfants = new ComboBox<>();
-		String[] choix = {"oui", "non", "non renseigne" };
-		
-	
-	
-	
+			rechercheHobbyMoins.valueProperty().addListener(observable -> {
+				listeRecherche[1]=rechercheHobbyMoins.getValue();
+			});
+			rechercheAnimal.valueProperty().addListener(observable -> {
+				listeRecherche[2]=rechercheAnimal.getValue();
+				
+			});
+			rechercheAnimalMoins.valueProperty().addListener(observable -> {
+				listeRecherche[3]=rechercheAnimalMoins.getValue();
+				
+			});
+			ComboBox<String> cbLire = new ComboBox<>();
+			ComboBox<String> cbJeuS= new ComboBox<>();
+			ComboBox<String> cbJeuV = new ComboBox<>();
+			ComboBox<String> cbEnfants = new ComboBox<>();
+			String[] choix = {"oui", "non", "non renseigné" };
+			cbLire.setButtonCell(new cellChoix());
+			cbLire.setCellFactory(listView -> new cellChoix());
+			cbJeuS.setButtonCell(new cellChoix());
+			cbJeuS.setCellFactory(listView -> new cellChoix());
+			cbJeuV.setButtonCell(new cellChoix());
+			cbJeuV.setCellFactory(listView -> new cellChoix());
+			cbEnfants.setButtonCell(new cellChoix());
+			cbEnfants.setCellFactory(listView -> new cellChoix());
+			for(String s: choix){
+				cbLire.getItems().addAll(s);
+				cbJeuS.getItems().addAll(s);
+				cbJeuV.getItems().addAll(s);
+				cbEnfants.getItems().addAll(s);
+			}
+			
+			cbLire.valueProperty().addListener(observable -> {
+				listeRecherche[4]=cbLire.getValue();
+			});
+			cbJeuS.valueProperty().addListener(observable -> {
+				listeRecherche[5]=cbJeuS.getValue();
+			});
+			cbJeuV.valueProperty().addListener(observable -> {
+				listeRecherche[6]=cbJeuV.getValue();
+			});
+			cbEnfants.valueProperty().addListener(observable -> {
+				listeRecherche[7]=cbEnfants.getValue();
+			});
+			cbLire.setLayoutX(50);
+			cbLire.setLayoutY(scene.getHeight()-240);
+			cbJeuS.setLayoutX(300);
+			cbJeuS.setLayoutY(scene.getHeight()-240);
+			cbJeuV.setLayoutX(50);
+			cbJeuV.setLayoutY(scene.getHeight()-170);
+			cbEnfants.setLayoutX(300);
+			cbEnfants.setLayoutY(scene.getHeight()-170);
+			String[] listenom={"Hobby préféré","Hobby détesté","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
+			for(int x=0;x<2;x++){
+				for(int y=0;y<4;y++){
+					createLabel cL=new createLabel(250*x+50, (int)scene.getHeight()-400+y*70, root, listenom[x*4+y]);
+				}
+			}
+			root.getChildren().addAll(rechercheHobby,rechercheHobbyMoins,rechercheAnimal,rechercheAnimalMoins,cbLire,cbJeuS,cbJeuV,cbEnfants);
+			Button bouttonRechercheSelect=new Button("Recherche sélective");
+			bouttonRechercheSelect.setTranslateX(scene.getWidth()/2-24);
+			bouttonRechercheSelect.setTranslateY(scene.getHeight()/2+150);
+			Label erreur=new Label("");
+			erreur.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+			erreur.setTranslateX((int)scene.getWidth()/2-100);
+			erreur.setTranslateY((int)scene.getHeight()/2+180);
+			root.getChildren().add(erreur);
+			bouttonRechercheSelect.setOnAction(e -> {
+				erreur.setText("");
+				ArrayList<Personne> listeRep=new ArrayList<Personne>();
+					for(Personne p: gd.listePersonne){
+						if((listeRecherche[0]=="non renseigné" || listeRecherche[0]==p.hobbi) && 
+						(listeRecherche[1]=="non renseigné" || listeRecherche[1]==p.hobbiM) &&
+						(listeRecherche[2]=="non renseigné" || listeRecherche[2]==p.animalAime) && 
+						(listeRecherche[3]=="non renseigné" || listeRecherche[3]==p.animalDeteste) && 
+						(listeRecherche[4]=="non renseigné" || listeRecherche[4]==p.aimeLire) && 
+						(listeRecherche[5]=="non renseigné" || listeRecherche[5]==p.aimeJouerS) && 
+						(listeRecherche[6]=="non renseigné" || listeRecherche[6]==p.aimeJouerJV) && 
+						(listeRecherche[7]=="non renseigné" || listeRecherche[7]==p.aEnfant)){
+							listeRep.add(p);
+						}
+					}
+					if(listeRep.size()>0){
+					comboBox.getItems().setAll(listeRep.get(0));
+					for(int i=1;i<listeRep.size();i++) {
+						comboBox.getItems().addAll(listeRep.get(i)); ///setall à la place de addAll pour remplacer les valeurs
+					}
+					comboBox.setValue(listeRep.get(0));
+					}
+					else{
+						erreur.setText("Personne ne correspond à ces attributs");
+					}
+				
+			 });
+			Button bouttonReset=new Button("Reset la recherche");
+			bouttonReset.setTranslateX(scene.getWidth()/2-24);
+			bouttonReset.setTranslateY(scene.getHeight()/2+250);
+			bouttonReset.setOnAction(e -> {
+			 comboBox.getItems().setAll(gd.listePersonne.get(0));
+			 for(int i=1;i<gd.listePersonne.size();i++) {
+				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
+			}
+			});
+			root.getChildren().addAll(bouttonRechercheSelect,bouttonReset);
+			primaryStage.setScene(scene);
+			primaryStage.show();
 	}
-	
 		catch(Exception e) {
 		}
 	}
-
 
 	public static void main(String[] args) {
 		launch(args);
