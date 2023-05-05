@@ -20,15 +20,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.text.Font;
 
-import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
@@ -173,7 +170,6 @@ public class Main extends Application {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			 
         } 
     } 
 }
@@ -211,7 +207,7 @@ public class Main extends Application {
 			r2.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
 			r2.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
 			r2.setX(300); 
-			r2.setY((int) scene.getHeight()-1350); 
+			r2.setY(15); 
 			r2.setWidth(300); 
 			r2.setHeight(550); 
 			r2.setArcWidth(20); 
@@ -221,8 +217,8 @@ public class Main extends Application {
 			Rectangle r3 = new Rectangle();
 			r3.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
 			r3.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
-			r3.setX(1955); 
-			r3.setY((int) scene.getHeight()-1350); 
+			r3.setX(scene.getWidth()-600); 
+			r3.setY(15); 
 			r3.setWidth(300); 
 			r3.setHeight(550); 
 			r3.setArcWidth(20); 
@@ -390,6 +386,7 @@ public class Main extends Application {
 					createLabel cL=new createLabel(250*x+50, (int)scene.getHeight()-400+y*70, root, listenom[x*4+y]);
 				}
 			}
+			
 			root.getChildren().addAll(rechercheHobby,rechercheHobbyMoins,rechercheAnimal,rechercheAnimalMoins,cbLire,cbJeuS,cbJeuV,cbEnfants);
 			Button bouttonRechercheSelect=new Button("Recherche sélective");
 			bouttonRechercheSelect.setTranslateX(scene.getWidth()/2-24);
