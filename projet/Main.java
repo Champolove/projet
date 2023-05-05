@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler;
@@ -82,7 +83,7 @@ public class Main extends Application {
 			InputStream stream = new FileInputStream(p.URLPhoto);
 			imagePersonne.setImage(new Image(stream));
 			if(multi==1){
-				imagePersonne.setX(scene.getWidth()-550);
+				imagePersonne.setX(scene.getWidth()-570);
 			}
 			else{
 				imagePersonne.setX(320);
@@ -96,7 +97,7 @@ public class Main extends Application {
 ;			}
 			labelDescription=new Label(s);
 			if(multi==1){
-				labelDescription.setTranslateX(scene.getWidth()-550);
+				labelDescription.setTranslateX(scene.getWidth()-570);
 			}
 			else{
 				labelDescription.setTranslateX(320);
@@ -191,6 +192,8 @@ public class Main extends Application {
 			primaryStage.setTitle("Champolove");
 			primaryStage.getIcons().add(new Image("/images/icon.png"));
 			Rectangle r = new Rectangle();
+			Label label = new Label("Attributs pour la recherche inversée");
+			label.setStyle("-fx-font-size: 20px; -fx-text-fill: black;");
 			r.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
 			r.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
 			r.setX(30); 
@@ -199,7 +202,10 @@ public class Main extends Application {
 			r.setHeight(270); 
 			r.setArcWidth(20); 
 			r.setArcHeight(20); 
+			label.setLayoutX(75);
+			label.setLayoutY(r.getY() + r.getHeight() -300);
 			root.getChildren().add(r);
+			root.getChildren().add(label);
 
 			Rectangle r2 = new Rectangle();
 			r2.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
@@ -215,7 +221,7 @@ public class Main extends Application {
 			Rectangle r3 = new Rectangle();
 			r3.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
 			r3.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
-			r3.setX(1980); 
+			r3.setX(1955); 
 			r3.setY((int) scene.getHeight()-1350); 
 			r3.setWidth(300); 
 			r3.setHeight(550); 
