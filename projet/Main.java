@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.shape.Polyline;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -186,6 +187,15 @@ public class Main extends Application {
 			    }
 			});
 			primaryStage.setTitle("Champolove");
+			primaryStage.getIcons().add(new Image("/images/icon.png"));
+			Polyline polyline = new Polyline();
+			polyline.getPoints().addAll(new Double[]{
+			30.0, scene.getHeight()-400,
+			480.0, scene.getHeight()-400,
+			480.0, scene.getHeight()-130,
+			30.0,scene.getHeight()-130,
+			30.0, scene.getHeight()-400});
+			root.getChildren().add(polyline);
 			Button b=new Button();
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();
@@ -395,6 +405,7 @@ public class Main extends Application {
 			root.getChildren().addAll(bouttonRechercheSelect,bouttonReset);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+
 	}
 		catch(Exception e) {
 		}
