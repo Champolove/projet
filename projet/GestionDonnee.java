@@ -1,7 +1,13 @@
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
+
+
 import java.util.HashMap;
+
 
 public class GestionDonnee {
 	HashMap<String,Personne> dicoPersonne=new HashMap<String,Personne>();
@@ -87,27 +93,32 @@ public class GestionDonnee {
         }
 		int[] compteur={0,0,0,0};
 		int j=0;
+		String workingDir = System.getProperty("user.dir");
 		while(j<50){
 			try{
 				Personne perso=new creePersonne().p;
 				if(perso.age<40){
 					if(perso.sexe=="1"){
-						//C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\
-						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-young-adult"+compteur[0]+".png";
+						Path p=Paths.get(workingDir+File.separator+"projet"+File.separator+"images"+File.separator+"photo-female-young-adult"+compteur[0]+".png");
+						perso.URLPhoto=p.toString();
 						compteur[0]+=1;
 					}
 				else{
-					perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-young-adult"+compteur[2]+".png";
+					Path p=Paths.get(workingDir+File.separator+"projet"+File.separator+"images"+File.separator+"photo-male-young-adult"+compteur[2]+".png");
+						perso.URLPhoto=p.toString();
 					compteur[2]+=1;
 				}
 				}
 				else{
 					if(perso.sexe=="1"){
-						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-female-adult"+compteur[1]+".png";
+						Path p=Paths.get(workingDir+File.separator+"projet"+File.separator+"images"+File.separator+"photo-female-adult"+compteur[1]+".png");
+						perso.URLPhoto=p.toString();
+
 						compteur[1]+=1;
 					}
 					else{
-						perso.URLPhoto="C:\\Users\\colin\\Documents\\GitHub\\projet\\projet\\images\\photo-male-adult"+compteur[3]+".png";
+						Path p=Paths.get(workingDir+File.separator+"projet"+File.separator+"images"+File.separator+"photo-male-adult"+compteur[3]+".png");
+						perso.URLPhoto=p.toString();
 						compteur[3]+=1;
 					}
 				}
