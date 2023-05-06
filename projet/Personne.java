@@ -36,8 +36,8 @@ public class Personne {
 		aimeJouerS=aS;
 		aimeJouerJV=aJV;
 		aEnfant=aE;
-		hobbi=String.valueOf(GestionDonnee.dicoHobbies.get(h));
-		hobbiM=String.valueOf(GestionDonnee.dicoHobbies.get(hm));
+		hobbi=h;
+		hobbiM=hm;
 		hetero=s!=att;
 		hash=new ArrayList<>();
 		hashMatch=new ArrayList<>();
