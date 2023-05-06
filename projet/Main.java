@@ -3,176 +3,24 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.text.Font;
-
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Main extends Application {
-	public class createLabel{
-		public createLabel(int x,int y,Group root,String texte){
-			Label labelDesc=new Label(texte);
-			labelDesc.setTranslateX(x);
-			labelDesc.setTranslateY(y);
-			labelDesc.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-			root.getChildren().add(labelDesc);
-		}
-	}
-	public class cellSelect extends ListCell<Personne> {
 
-	    @Override
-	    protected void updateItem(Personne item, boolean empty) {
-	        super.updateItem(item, empty);
-	        setText(null);
-	        if (!empty && item != null) {
-	            final String text = String.format("%s %s", item.nom, item.prenom);
-	            setText(text);
-	        }
-	    }
-	}
-	public class cellChoix extends ListCell<String> {
-
-        @Override
-        protected void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            setText(null);
-            if (!empty && item != null) {
-                final String text = String.format("%s",item);
-                setText(text);
-            }
-        }
-    }
-
-	//change l'image de la personne de gauche	
-	public class afficheProfil{
-		ImageView imagePersonne = new ImageView();
-		Label labelDescription;
-		public afficheProfil(Personne p,Group root,int multi,Scene scene) throws FileNotFoundException{
-			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
-			InputStream stream = new FileInputStream(p.URLPhoto);
-			imagePersonne.setImage(new Image(stream));
-			if(multi==1){
-				imagePersonne.setX(scene.getWidth()-570);
-			}
-			else{
-				imagePersonne.setX(320);
-			}
-			
-			imagePersonne.setY(30);
-			imagePersonne.setFitWidth(200);
-			imagePersonne.setPreserveRatio(true);
-			for(String valeur: p.stat){
-				s+=valeur;
-;			}
-			labelDescription=new Label(s);
-			if(multi==1){
-				labelDescription.setTranslateX(scene.getWidth()-570);
-			}
-			else{
-				labelDescription.setTranslateX(320);
-			}
-			labelDescription.setTranslateY(230);
-			labelDescription.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-			root.getChildren().add(labelDescription);
-			root.getChildren().add(imagePersonne);
-		}
-		public void update(Personne p) throws FileNotFoundException{
-			String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
-			InputStream stream = new FileInputStream(p.URLPhoto);
-			imagePersonne.setImage(new Image(stream));
-			for(String valeur: p.stat){
-				s+=valeur;
-;			}
-			labelDescription.setText(s);
-		}
-	}
-
-	public class cellDefill extends ListCell<Personne> { 
-		private final GridPane gridPane = new GridPane(); 
-		private final Label labelNP = new Label(); 
-		private final Label labelAge = new Label(); 
-		private final ImageView imagePersonne = new ImageView(); 
-		private final AnchorPane content = new AnchorPane(); 
-	
-    public cellDefill() { 
-        imagePersonne.setFitWidth(75); 
-        imagePersonne.setPreserveRatio(true); 
-        GridPane.setConstraints(imagePersonne, 0, 0, 1, 3); 
-        GridPane.setValignment(imagePersonne, VPos.TOP); 
-        // 
-        labelNP.setStyle("-fx-font-size: 1.5em;"); 
-        GridPane.setConstraints(labelNP, 1, 0); 
-        // 
-        labelAge.setStyle("-fx-opacity: 0.9; -fx-font-size: 1.3em;"); 
-        GridPane.setConstraints(labelAge, 1, 1); 
-        GridPane.setColumnSpan(labelAge, Integer.MAX_VALUE); 
-        //         
-        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
-        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, HPos.LEFT, true)); 
-        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
-        gridPane.getColumnConstraints().add(new ColumnConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, HPos.LEFT, true)); 
-        gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
-        gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.NEVER, VPos.CENTER, true)); 
-        gridPane.getRowConstraints().add(new RowConstraints(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE, Priority.ALWAYS, VPos.CENTER, true)); 
-        gridPane.setHgap(6); 
-        gridPane.setVgap(6); 
-        gridPane.getChildren().setAll(imagePersonne, labelNP, labelAge); 
-        AnchorPane.setTopAnchor(gridPane, 0d); 
-        AnchorPane.setLeftAnchor(gridPane, 0d); 
-        AnchorPane.setBottomAnchor(gridPane, 0d); 
-        AnchorPane.setRightAnchor(gridPane, 0d); 
-        content.getChildren().add(gridPane); 
-    } 
-  
-    @Override 
-    protected void updateItem(Personne item, boolean empty) { 
-        super.updateItem(item, empty); 
-        setGraphic(null); 
-        setText(null); 
-        setContentDisplay(ContentDisplay.LEFT); 
-        if (!empty && item != null) {
-			try {
-				labelNP.setText("Nom: "+item.nom+"\nPrenom: "+item.prenom);
-				InputStream stream = new FileInputStream(item.URLPhoto);
-				imagePersonne.setImage(new Image(stream));
-				labelAge.setText(String.format("%d ans", item.age)); 
-				setText(null); 
-				setGraphic(content); 
-				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        } 
-    } 
-}
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -230,10 +78,10 @@ public class Main extends Application {
 			GestionDonnee gd=new GestionDonnee();
 			//côté gauche
 			final ComboBox<Personne> comboBox = new ComboBox<Personne>();
-			afficheProfil aP=new afficheProfil(gd.listePersonne.get(0), root,0,scene);
-			comboBox.setButtonCell(new cellSelect());
+			AfficheProfil aP=new AfficheProfil(gd.listePersonne.get(0), root,0,scene);
+			comboBox.setButtonCell(new CellSelect());
 			comboBox.setValue(gd.listePersonne.get(0));
-			comboBox.setCellFactory(listView -> new cellDefill()); //changer ici pour les cases affichées
+			comboBox.setCellFactory(listView -> new CellDefill()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
@@ -247,10 +95,10 @@ public class Main extends Application {
 			});
 			//côté droit
 			final ComboBox<Personne> comboBox2 = new ComboBox<Personne>();
-			afficheProfil aP2=new afficheProfil(gd.listePersonne.get(1), root,1,scene);
-			comboBox2.setButtonCell(new cellSelect());
+			AfficheProfil aP2=new AfficheProfil(gd.listePersonne.get(1), root,1,scene);
+			comboBox2.setButtonCell(new CellSelect());
 			comboBox2.setValue(gd.listePersonne.get(29));
-			comboBox2.setCellFactory(listView -> new cellDefill()); //changer ici pour les cases affichées
+			comboBox2.setCellFactory(listView -> new CellDefill()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
 				comboBox2.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
@@ -303,16 +151,16 @@ public class Main extends Application {
 			ComboBox<String> rechercheHobby= new ComboBox<>();
 			ComboBox<String> rechercheAnimalMoins= new ComboBox<>();
 			ComboBox<String> rechercheHobbyMoins= new ComboBox<>();
-			rechercheAnimal.setButtonCell(new cellChoix());
-			rechercheAnimal.setCellFactory(listView -> new cellChoix());
-			rechercheAnimalMoins.setButtonCell(new cellChoix());
-			rechercheAnimalMoins.setCellFactory(listView -> new cellChoix());
+			rechercheAnimal.setButtonCell(new CellChoix());
+			rechercheAnimal.setCellFactory(listView -> new CellChoix());
+			rechercheAnimalMoins.setButtonCell(new CellChoix());
+			rechercheAnimalMoins.setCellFactory(listView -> new CellChoix());
 			for(Map.Entry s: GestionDonnee.dicoAnimal.entrySet()) {
 				rechercheAnimal.getItems().addAll(String.valueOf(s.getKey())); 
 				rechercheAnimalMoins.getItems().addAll(String.valueOf(s.getKey()));
 					}
-			rechercheHobby.setCellFactory(listView -> new cellChoix());
-			rechercheHobbyMoins.setCellFactory(listView -> new cellChoix());
+			rechercheHobby.setCellFactory(listView -> new CellChoix());
+			rechercheHobbyMoins.setCellFactory(listView -> new CellChoix());
 			for(Map.Entry s: GestionDonnee.dicoHobbies.entrySet()) {
 					rechercheHobby.getItems().addAll(String.valueOf(s.getKey()));
 					rechercheHobbyMoins.getItems().addAll(String.valueOf(s.getKey()));
@@ -345,14 +193,14 @@ public class Main extends Application {
 			ComboBox<String> cbJeuV = new ComboBox<>();
 			ComboBox<String> cbEnfants = new ComboBox<>();
 			String[] choix = {"oui", "non", "non renseigné" };
-			cbLire.setButtonCell(new cellChoix());
-			cbLire.setCellFactory(listView -> new cellChoix());
-			cbJeuS.setButtonCell(new cellChoix());
-			cbJeuS.setCellFactory(listView -> new cellChoix());
-			cbJeuV.setButtonCell(new cellChoix());
-			cbJeuV.setCellFactory(listView -> new cellChoix());
-			cbEnfants.setButtonCell(new cellChoix());
-			cbEnfants.setCellFactory(listView -> new cellChoix());
+			cbLire.setButtonCell(new CellChoix());
+			cbLire.setCellFactory(listView -> new CellChoix());
+			cbJeuS.setButtonCell(new CellChoix());
+			cbJeuS.setCellFactory(listView -> new CellChoix());
+			cbJeuV.setButtonCell(new CellChoix());
+			cbJeuV.setCellFactory(listView -> new CellChoix());
+			cbEnfants.setButtonCell(new CellChoix());
+			cbEnfants.setCellFactory(listView -> new CellChoix());
 			for(String s: choix){
 				cbLire.getItems().addAll(s);
 				cbJeuS.getItems().addAll(s);
@@ -383,7 +231,7 @@ public class Main extends Application {
 			String[] listenom={"Hobby préféré","Hobby détesté","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
 			for(int x=0;x<2;x++){
 				for(int y=0;y<4;y++){
-					createLabel cL=new createLabel(250*x+50, (int)scene.getHeight()-400+y*70, root, listenom[x*4+y]);
+					CreateLabel cL=new CreateLabel(250*x+50, (int)scene.getHeight()-400+y*70, root, listenom[x*4+y]);
 				}
 			}
 			
@@ -414,7 +262,7 @@ public class Main extends Application {
 					if(listeRep.size()>0){
 					comboBox.getItems().setAll(listeRep.get(0));
 					for(int i=1;i<listeRep.size();i++) {
-						comboBox.getItems().addAll(listeRep.get(i)); ///setall à la place de addAll pour remplacer les valeurs
+						comboBox.getItems().addAll(listeRep.get(i));
 					}
 					comboBox.setValue(listeRep.get(0));
 					}
@@ -429,7 +277,7 @@ public class Main extends Application {
 			bouttonReset.setOnAction(e -> {
 			 comboBox.getItems().setAll(gd.listePersonne.get(0));
 			 for(int i=1;i<gd.listePersonne.size();i++) {
-				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
+				comboBox.getItems().addAll(gd.listePersonne.get(i));
 			}
 			});
 			root.getChildren().addAll(bouttonRechercheSelect,bouttonReset);
