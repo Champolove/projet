@@ -28,9 +28,7 @@ public class AfficheProfil{
         imagePersonne.setY(30);
         imagePersonne.setFitWidth(200);
         imagePersonne.setPreserveRatio(true);
-        for(String valeur: p.stat){
-            s+=valeur;
-;			}
+        s+=p.profil;
         labelDescription=new Label(s);
         if(multi==1){
             labelDescription.setTranslateX(scene.getWidth()-570);
@@ -47,9 +45,7 @@ public class AfficheProfil{
         String s="nom: "+p.nom+"\nprenom: "+p.prenom+"\nage: "+p.age;
         InputStream stream = new FileInputStream(p.URLPhoto);
         imagePersonne.setImage(new Image(stream));
-        for(String valeur: p.stat){
-            s+=valeur;
-;			}
+        s+=p.profil;
         labelDescription.setText(s);
     }
 }

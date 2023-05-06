@@ -9,9 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
-import javafx.event.EventHandler;
 import javafx.scene.text.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -27,52 +25,18 @@ public class Main extends Application {
 			GraphicsDevice ecranTaille = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			Group root = new Group();
 			Scene scene = new Scene(root,ecranTaille.getDisplayMode().getWidth(),ecranTaille.getDisplayMode().getHeight()-70);
-			scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-			    @Override
-			    public void handle(MouseEvent mouseEvent) {
-			        //System.out.println("mouse click detected! " + mouseEvent.getSource());
-			    }
-			});
 			primaryStage.setTitle("Champolove");
 			primaryStage.getIcons().add(new Image("/images/icon.png"));
-			Rectangle r = new Rectangle();
+
+			Rectangle r = new CreateRectangle(30,(int) scene.getHeight()-400,450,270,20,"#ECE8E7").rectangle;
+			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
+			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
 			Label label = new Label("Attributs pour la recherche inversée");
 			label.setStyle("-fx-font-size: 20px; -fx-text-fill: black;");
-			r.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
-			r.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
-			r.setX(30); 
-			r.setY((int) scene.getHeight()-400); 
-			r.setWidth(450); 
-			r.setHeight(270); 
-			r.setArcWidth(20); 
-			r.setArcHeight(20); 
 			label.setLayoutX(75);
 			label.setLayoutY(r.getY() + r.getHeight() -300);
-			root.getChildren().add(r);
-			root.getChildren().add(label);
-
-			Rectangle r2 = new Rectangle();
-			r2.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
-			r2.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
-			r2.setX(300); 
-			r2.setY(15); 
-			r2.setWidth(300); 
-			r2.setHeight(550); 
-			r2.setArcWidth(20); 
-			r2.setArcHeight(20); 
-			root.getChildren().add(r2);
-
-			Rectangle r3 = new Rectangle();
-			r3.setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
-			r3.setFill(javafx.scene.paint.Color.valueOf("#ECE8E7"));
-			r3.setX(scene.getWidth()-600); 
-			r3.setY(15); 
-			r3.setWidth(300); 
-			r3.setHeight(550); 
-			r3.setArcWidth(20); 
-			r3.setArcHeight(20); 
-			root.getChildren().add(r3);
-
+			root.getChildren().addAll(r,r2,r3,label);
+			
 			Button b=new Button();
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();

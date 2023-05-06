@@ -21,7 +21,7 @@ public class Personne {
 	ArrayList<String> hash;
 	ArrayList<String> hashMatch;
 	boolean hetero;
-	ArrayList<String> stat;
+	String profil;
 	String[] vf={"oui","non"};
 
 	public Personne(String n, String pn, int a, String s, String att,String aA,String aD,String aL,String aS,String aJV,String aE,String h,String hm) {
@@ -43,54 +43,54 @@ public class Personne {
 		hashMatch=new ArrayList<>();
 		hash.addAll(Arrays.asList(s,att,String.valueOf(GestionDonnee.dicoAnimal.get(aA)),String.valueOf(GestionDonnee.dicoAnimal.get(aD)),aL,aS,aJV,aE,String.valueOf(GestionDonnee.dicoHobbies.get(h)),String.valueOf(GestionDonnee.dicoHobbies.get(hm))));
 		hashMatch.addAll(Arrays.asList(att,s,animalDeteste,animalAime,aL,aS,aJV,aE,hobbiM,hobbi));
-		stat=new ArrayList<String>();
+		profil="";
 		if(aA!=null){
-			stat.add("\nAime: "+aA);
+			profil+="\nAime: "+aA;
 		}
 		else{
-		stat.add("\nAime: non renseigné");
+		profil+="\nAime: non renseigné";
 		}
 		if(aD!=null){
-			stat.add("\nDéteste: "+aD);
+			profil+="\nDéteste: "+aD;
 		}
 		else{
-		stat.add("\nDéteste: non renseigné");
+		profil+="\nDéteste: non renseigné";
 		}
 		if(aL!=null){
-			stat.add("\nAime lire: "+vf[Integer.valueOf(aL)]);
+			profil+="\nAime lire: "+vf[Integer.valueOf(aL)];
 		}
 		else{
-		stat.add("\nAime lire: non renseigné");
+		profil+="\nAime lire: non renseigné";
 		}
 		if(aS!=null){
-			stat.add("\nAime les jeux de société: "+vf[Integer.valueOf(aS)]);
+			profil+="\nAime les jeux de société: "+vf[Integer.valueOf(aS)];
 		}
 		else{
-		stat.add("\nAime les jeux de société: non renseigné");
+		profil+="\nAime les jeux de société: non renseigné";
 		}
 		if(aJV!=null){
-			stat.add("\nAime les jeu vidéos: "+vf[Integer.valueOf(aJV)]);
+			profil+="\nAime les jeu vidéos: "+vf[Integer.valueOf(aJV)];
 		}
 		else{
-		stat.add("\nAime les jeu vidéos: non renseigné");
+		profil+="\nAime les jeu vidéos: non renseigné";
 		}
 		if(aE!=null){
-			stat.add("\nA des enfants: "+vf[Integer.valueOf(aE)]);
+			profil+="\nA des enfants: "+vf[Integer.valueOf(aE)];
 		}
 		else{
-		stat.add("\nA des enfants: non renseigné");
+		profil+="\nA des enfants: non renseigné";
 		}
 		if(h!=null){
-			stat.add("\nHobby: "+h);
+			profil+="\nHobby: "+h;
 		}
 		else{
-		stat.add("\nHobby: non renseigné");
+		profil+="\nHobby: non renseigné";
 		}
 		if(hm!=null){
-			stat.add("\nN'aime pas: "+hm);
+			profil+="\nN'aime pas: "+hm;
 		}
 		else{
-		stat.add("\nN'aime pas: non renseigné");
+		profil+="\nN'aime pas: non renseigné";
 		}
 
 	}
