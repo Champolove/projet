@@ -50,7 +50,7 @@ public class Main extends Application {
 			});
 
 			//modifications côté gauche
-			Button bouttonModifGauche=new CreateButton(450, 590, "Enregistrer les modifications", root).button;
+			Button bouttonModifGauche=new CreateButton(365, 580, "Enregistrer les modifications", root).button;
 			bouttonModifGauche.setOnAction(e->{
 				Personne p=gd.dicoPersonne.get(comboBox.getValue().toString());
 				aP.modification(p,gd);
@@ -59,7 +59,7 @@ public class Main extends Application {
 			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r3);
 			final ComboBox<Personne> comboBox2 = new ComboBox<Personne>();
-			AfficheProfil aP2=new AfficheProfil(gd.listePersonne.get(1), root,1,scene);
+			AfficheProfil aP2=new AfficheProfil(gd.listePersonne.get(29), root,1,scene);
 			comboBox2.setButtonCell(new CellSelect());
 			comboBox2.setValue(gd.listePersonne.get(29));
 			comboBox2.setCellFactory(listView -> new CellDefill()); //changer ici pour les cases affichées
@@ -85,7 +85,13 @@ public class Main extends Application {
 				comboBox2.setValue(p.get(0));
 			});
 			root.getChildren().addAll(comboBox,comboBox2);
-			
+
+			//modifications côté droit
+			Button bouttonModifdroite=new CreateButton((int) scene.getWidth()-530, 580, "Enregistrer les modifications", root).button;
+			bouttonModifdroite.setOnAction(e->{
+				Personne p=gd.dicoPersonne.get(comboBox2.getValue().toString());
+				aP2.modification(p,gd);
+			});
 
 			//Recherche inversée
 			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
