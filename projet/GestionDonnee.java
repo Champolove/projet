@@ -60,12 +60,12 @@ public class GestionDonnee {
 			String aA=String.valueOf(String.valueOf(animal.values()[new Random().nextInt(animal.values().length)]));
 			String ad=String.valueOf(String.valueOf(animal.values()[new Random().nextInt(animal.values().length)]));
 			if(aA.equals(ad)){
-				ad=null;
+				ad="non renseigné";
 			}
 			String h=String.valueOf(String.valueOf(hobbies.values()[new Random().nextInt(hobbies.values().length)]));
 			String hm=String.valueOf(String.valueOf(hobbies.values()[new Random().nextInt(hobbies.values().length)]));
 			if(h.equals(hm)){
-				hm=null;
+				hm="non renseigné";
 			}
 			p=new Personne(prenom,nom[r.nextInt(nom.length)],r.nextInt(32)+18,sexe,attirance,aA,ad,String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),String.valueOf(r.nextInt(2)),h,hm);
 		}

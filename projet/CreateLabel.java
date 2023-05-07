@@ -29,4 +29,11 @@ public class CreateLabel{
         label.setStyle(style);
         root.getChildren().add(label);
     }
+    public CreateLabel(int x,int y,Group root,String texte,int taille){
+        label=new Label(texte);
+        label.setTranslateX(x);
+        label.setTranslateY(y);
+        label.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, taille));
+        root.getChildren().add(label);
+    }
 }

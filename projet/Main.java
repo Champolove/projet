@@ -49,6 +49,12 @@ public class Main extends Application {
 				}
 			});
 
+			//modifications côté gauche
+			Button bouttonModifGauche=new CreateButton(450, 590, "Enregistrer les modifications", root).button;
+			bouttonModifGauche.setOnAction(e->{
+				Personne p=gd.dicoPersonne.get(comboBox.getValue().toString());
+				aP.modification(p,gd);
+			});
 			//côté droit
 			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r3);
@@ -85,14 +91,14 @@ public class Main extends Application {
 			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r1);
 			Button buttonRechercheinv = new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+50, "Recherche Inversée", root).button;
-			TextField textField1 = new TextField();
-			textField1.setTranslateX(scene.getWidth()/2-53);
-			textField1.setTranslateY(scene.getHeight()/2+100);
-			textField1.setMinWidth(175);
-			textField1.setPromptText("Entrez le nom et le prénom ici");
+			TextField textField1 = new CreateTextField((int) scene.getWidth()/2-53, (int) scene.getHeight()/2+100, 175).textfield;
+			textField1.setStyle("-fx-prompt-text-fill: #AAAAAA;");
+			textField1.setPromptText("Entrez le nom et le prénom");
+			root.getChildren().add(textField1);
 			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-140, (int)scene.getHeight()/2+130, root).label;
 			buttonRechercheinv.setOnAction(e -> {
 				try {
+					erreurRechercheinversee.setText("");
 					String name = textField1.getText();
 					Personne p=gd.dicoPersonne.get(name);
 					if(p!=null){
@@ -106,7 +112,7 @@ public class Main extends Application {
 				}catch(java.lang.NullPointerException e1){
 				}
 			 });
-			root.getChildren().add(textField1);
+			
 
 			//Recherche selective
 			Rectangle r = new CreateRectangle(30,(int) scene.getHeight()-360,450,270,20,"#ECE8E7").rectangle;
@@ -141,6 +147,7 @@ public class Main extends Application {
 				cbEnfants.getItems().add(s);
 			}
 			String[] listenom={"Hobby préféré","Hobby détesté","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
+			//Label recherche sélective
 			for(int x=0;x<2;x++){
 				for(int y=0;y<4;y++){
 					Label cL=new CreateLabel(250*x+50, (int)scene.getHeight()-360+y*70, root, listenom[x*4+y]).label;
@@ -148,6 +155,7 @@ public class Main extends Application {
 			}
 			root.getChildren().addAll(rechercheHobby,rechercheHobbyMoins,rechercheAnimal,rechercheAnimalMoins,cbLire,cbJeuS,cbJeuV,cbEnfants);
 			Button bouttonRechercheSelect=new CreateButton(175, (int) scene.getHeight()-80, "Recherche sélective",root).button;
+			//Erreur no one found
 			Label erreur=new CreateLabel((int)scene.getWidth()/2-100, (int)scene.getHeight()/2+180, root).label;
 			erreur.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
 			bouttonRechercheSelect.setOnAction(e -> {
@@ -185,6 +193,8 @@ public class Main extends Application {
 				comboBox.getItems().add(gd.listePersonne.get(i));
 			}
 			});
+
+			//setScene
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
