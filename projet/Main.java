@@ -28,7 +28,7 @@ public class Main extends Application {
 			Group root = new Group();
 			Scene scene = new Scene(root,ecranTaille.getDisplayMode().getWidth(),ecranTaille.getDisplayMode().getHeight()-70);
 			primaryStage.setTitle("Champolove");
-			primaryStage.getIcons().add(new Image("/images/icon.png"));
+			primaryStage.getIcons().add(new Image("/images/coeur-plein.png"));
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();
 
@@ -167,14 +167,14 @@ public class Main extends Application {
 				erreur.setText("");
 				ArrayList<Personne> listeRep=new ArrayList<Personne>();
 					for(Personne p: gd.listePersonne){
-						if((listeRecherche[0]=="non renseigné" || listeRecherche[0]==p.hobbi) && 
-						(listeRecherche[1]=="non renseigné" || listeRecherche[1]==p.hobbiM) &&
-						(listeRecherche[2]=="non renseigné" || listeRecherche[2]==p.animalAime) && 
-						(listeRecherche[3]=="non renseigné" || listeRecherche[3]==p.animalDeteste) && 
-						(listeRecherche[4]=="non renseigné" || listeRecherche[4]==p.aimeLire) && 
-						(listeRecherche[5]=="non renseigné" || listeRecherche[5]==p.aimeJouerS) && 
-						(listeRecherche[6]=="non renseigné" || listeRecherche[6]==p.aimeJouerJV) && 
-						(listeRecherche[7]=="non renseigné" || listeRecherche[7]==p.aEnfant)){
+						if((listeRecherche[0]=="non renseigné" || listeRecherche[0]=="" || listeRecherche[0]==p.hobbi) && 
+						(listeRecherche[1]=="non renseigné" || listeRecherche[1]==""|| listeRecherche[1]==p.hobbiM) &&
+						(listeRecherche[2]=="non renseigné" || listeRecherche[2]==""|| listeRecherche[2]==p.animalAime) && 
+						(listeRecherche[3]=="non renseigné" || listeRecherche[3]==""|| listeRecherche[3]==p.animalDeteste) && 
+						(listeRecherche[4]=="non renseigné" || listeRecherche[4]==""|| listeRecherche[4]==p.aimeLire) && 
+						(listeRecherche[5]=="non renseigné" || listeRecherche[5]==""|| listeRecherche[5]==p.aimeJouerS) && 
+						(listeRecherche[6]=="non renseigné" || listeRecherche[6]==""|| listeRecherche[6]==p.aimeJouerJV) && 
+						(listeRecherche[7]=="non renseigné" || listeRecherche[7]==""|| listeRecherche[7]==p.aEnfant)){
 							listeRep.add(p);
 						}
 					}
@@ -193,12 +193,21 @@ public class Main extends Application {
 			//Reset 
 			Button bouttonReset=new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+250, "Reset la recherche",root).button;
 			bouttonReset.setOnAction(e -> {
-			 comboBox.getItems().setAll(gd.listePersonne.get(0));
-			 for(int i=1;i<gd.listePersonne.size();i++) {
-				comboBox.getItems().add(gd.listePersonne.get(i));
-			}
+			comboBox.getItems().setAll(gd.listePersonne.get(0));
+				for(int i=1;i<gd.listePersonne.size();i++) {
+					comboBox.getItems().add(gd.listePersonne.get(i));
+				}
+				erreurRechercheinversee.setText("");
+				rechercheAnimal.setValue("");
+				rechercheAnimalMoins.setValue("");
+				rechercheHobby.setValue("");
+				rechercheHobbyMoins.setValue("");
+				cbLire.setValue("");
+				cbJeuS.setValue("");
+				cbJeuV.setValue("");
+				cbEnfants.setValue("");
 			});
-
+			
 			//setScene
 			primaryStage.setScene(scene);
 			primaryStage.show();

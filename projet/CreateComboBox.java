@@ -12,5 +12,4 @@ public class CreateComboBox {
             listeRecherche[indice]=comboBox.getValue();
         });
     }
-    
 }
