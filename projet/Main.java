@@ -22,20 +22,19 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+
+			//setup
 			GraphicsDevice ecranTaille = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			Group root = new Group();
 			Scene scene = new Scene(root,ecranTaille.getDisplayMode().getWidth(),ecranTaille.getDisplayMode().getHeight()-70);
 			primaryStage.setTitle("Champolove");
 			primaryStage.getIcons().add(new Image("/images/icon.png"));
-			Rectangle r = new CreateRectangle(30,(int) scene.getHeight()-360,450,270,20,"#ECE8E7").rectangle;
-			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
-			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
-			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
-			Label label = new CreateLabel(82, (int) (r.getY() + r.getHeight() -300), root,"Attributs pour la recherche inversée","-fx-font-size: 20px; -fx-text-fill: black;").label;
-			root.getChildren().addAll(r,r1,r2,r3);
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();
+
 			//côté gauche
+			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
+			root.getChildren().addAll(r2);
 			final ComboBox<Personne> comboBox = new ComboBox<Personne>();
 			AfficheProfil aP=new AfficheProfil(gd.listePersonne.get(0), root,0,scene);
 			comboBox.setButtonCell(new CellSelect());
@@ -49,7 +48,10 @@ public class Main extends Application {
 				}catch(java.lang.NullPointerException e1){
 				}
 			});
+
 			//côté droit
+			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
+			root.getChildren().addAll(r3);
 			final ComboBox<Personne> comboBox2 = new ComboBox<Personne>();
 			AfficheProfil aP2=new AfficheProfil(gd.listePersonne.get(1), root,1,scene);
 			comboBox2.setButtonCell(new CellSelect());
@@ -78,12 +80,16 @@ public class Main extends Application {
 			});
 			root.getChildren().addAll(comboBox,comboBox2);
 			
+
+			//Recherche inversée
+			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
+			root.getChildren().addAll(r1);
 			Button buttonRechercheinv = new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+50, "Recherche Inversée", root).button;
 			TextField textField1 = new TextField();
 			textField1.setTranslateX(scene.getWidth()/2-53);
 			textField1.setTranslateY(scene.getHeight()/2+100);
 			textField1.setMinWidth(175);
-			textField1.setText("Entrez le nom et le prénom ici");
+			textField1.setPromptText("Entrez le nom et le prénom ici");
 			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-140, (int)scene.getHeight()/2+130, root).label;
 			buttonRechercheinv.setOnAction(e -> {
 				try {
@@ -94,13 +100,18 @@ public class Main extends Application {
 					aP.update(p);
 					}
 					else{
-						erreurRechercheinversee.setText("    Personne ne correspond à ce nom et ce prénom\nVeuillez remplir le champ sous la forme Nom Prenom");
+						erreurRechercheinversee.setText("   Personne ne correspond à ce nom et ce prénom\nVeuillez remplir le champ sous la forme Nom Prenom");
 					}
 				} catch (FileNotFoundException e1) {
 				}catch(java.lang.NullPointerException e1){
 				}
 			 });
 			root.getChildren().addAll(textField1);
+
+			//Recherche selective
+			Rectangle r = new CreateRectangle(30,(int) scene.getHeight()-360,450,270,20,"#ECE8E7").rectangle;
+			Label label = new CreateLabel(82, (int) (r.getY() + r.getHeight() -300), root,"Attributs pour la recherche sélective","-fx-font-size: 20px; -fx-text-fill: black;").label;
+			root.getChildren().addAll(r);
 			String[] listeRecherche = {"non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné"};
 			ComboBox<String> rechercheHobby= new CreateComboBox(50,(int)scene.getHeight()-340,0,listeRecherche).comboBox;
 			ComboBox<String> rechercheHobbyMoins= new CreateComboBox(50,(int)scene.getHeight()-270,1,listeRecherche).comboBox;
@@ -165,6 +176,8 @@ public class Main extends Application {
 						erreur.setText("Personne ne correspond à ces attributs");
 					}
 			 });
+
+			//Reset 
 			Button bouttonReset=new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+250, "Reset la recherche",root).button;
 			bouttonReset.setOnAction(e -> {
 			 comboBox.getItems().setAll(gd.listePersonne.get(0));
@@ -174,9 +187,11 @@ public class Main extends Application {
 			});
 			primaryStage.setScene(scene);
 			primaryStage.show();
+
 	}
 		catch(Exception e) {
 		}
+
 	}
 
 	public static void main(String[] args) {
