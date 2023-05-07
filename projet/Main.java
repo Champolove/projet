@@ -27,14 +27,12 @@ public class Main extends Application {
 			Scene scene = new Scene(root,ecranTaille.getDisplayMode().getWidth(),ecranTaille.getDisplayMode().getHeight()-70);
 			primaryStage.setTitle("Champolove");
 			primaryStage.getIcons().add(new Image("/images/icon.png"));
-
-			Rectangle r = new CreateRectangle(30,(int) scene.getHeight()-400,450,270,20,"#ECE8E7").rectangle;
+			Rectangle r = new CreateRectangle(30,(int) scene.getHeight()-360,450,270,20,"#ECE8E7").rectangle;
+			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
 			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
 			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
-			Label label = new CreateLabel(75, (int) (r.getY() + r.getHeight() -300), root,"Attributs pour la recherche inversée","-fx-font-size: 20px; -fx-text-fill: black;").label;
-			root.getChildren().addAll(r,r2,r3);
-			
-			
+			Label label = new CreateLabel(82, (int) (r.getY() + r.getHeight() -300), root,"Attributs pour la recherche inversée","-fx-font-size: 20px; -fx-text-fill: black;").label;
+			root.getChildren().addAll(r,r1,r2,r3);
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();
 			//côté gauche
@@ -43,9 +41,6 @@ public class Main extends Application {
 			comboBox.setButtonCell(new CellSelect());
 			comboBox.setValue(gd.listePersonne.get(0));
 			comboBox.setCellFactory(listView -> new CellDefill()); //changer ici pour les cases affichées
-			for(int i=0;i<gd.listePersonne.size();i++) {
-				comboBox.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
-			}
 			comboBox.valueProperty().addListener(observable -> {
 				try {
 					aP.update(gd.dicoPersonne.get(comboBox.getValue().toString()));
@@ -61,6 +56,7 @@ public class Main extends Application {
 			comboBox2.setValue(gd.listePersonne.get(29));
 			comboBox2.setCellFactory(listView -> new CellDefill()); //changer ici pour les cases affichées
 			for(int i=0;i<gd.listePersonne.size();i++) {
+				comboBox.getItems().addAll(gd.listePersonne.get(i));
 				comboBox2.getItems().addAll(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
 			comboBox2.valueProperty().addListener(observable -> {
@@ -80,13 +76,15 @@ public class Main extends Application {
 				}
 				comboBox2.setValue(p.get(0));
 			});
-			root.getChildren().add(comboBox);
-			root.getChildren().add(comboBox2);
+			root.getChildren().addAll(comboBox,comboBox2);
 			
-			TextField textField1 = new TextField();
 			Button buttonRechercheinv = new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+50, "Recherche Inversée", root).button;
-			textField1.setTranslateX(scene.getWidth()/2-40);
+			TextField textField1 = new TextField();
+			textField1.setTranslateX(scene.getWidth()/2-53);
 			textField1.setTranslateY(scene.getHeight()/2+100);
+			textField1.setMinWidth(175);
+			textField1.setText("Entrez le nom et le prénom ici");
+			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-140, (int)scene.getHeight()/2+130, root).label;
 			buttonRechercheinv.setOnAction(e -> {
 				try {
 					String name = textField1.getText();
@@ -95,16 +93,19 @@ public class Main extends Application {
 					comboBox.setValue(p);
 					aP.update(p);
 					}
+					else{
+						erreurRechercheinversee.setText("    Personne ne correspond à ce nom et ce prénom\nVeuillez remplir le champ sous la forme Nom Prenom");
+					}
 				} catch (FileNotFoundException e1) {
 				}catch(java.lang.NullPointerException e1){
 				}
 			 });
 			root.getChildren().addAll(textField1);
 			String[] listeRecherche = {"non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné","non renseigné"};
-			ComboBox<String> rechercheHobby= new CreateComboBox(50,(int)scene.getHeight()-380,0,listeRecherche).comboBox;
-			ComboBox<String> rechercheHobbyMoins= new CreateComboBox(50,(int)scene.getHeight()-310,1,listeRecherche).comboBox;
-			ComboBox<String> rechercheAnimal= new CreateComboBox(300,(int)scene.getHeight()-380,2,listeRecherche).comboBox;
-			ComboBox<String> rechercheAnimalMoins= new CreateComboBox(300,(int)scene.getHeight()-310,3,listeRecherche).comboBox;
+			ComboBox<String> rechercheHobby= new CreateComboBox(50,(int)scene.getHeight()-340,0,listeRecherche).comboBox;
+			ComboBox<String> rechercheHobbyMoins= new CreateComboBox(50,(int)scene.getHeight()-270,1,listeRecherche).comboBox;
+			ComboBox<String> rechercheAnimal= new CreateComboBox(300,(int)scene.getHeight()-340,2,listeRecherche).comboBox;
+			ComboBox<String> rechercheAnimalMoins= new CreateComboBox(300,(int)scene.getHeight()-270,3,listeRecherche).comboBox;
 			for(Map.Entry s: GestionDonnee.dicoHobbies.entrySet()) {
 				rechercheHobby.getItems().addAll(String.valueOf(s.getKey()));
 				rechercheHobbyMoins.getItems().addAll(String.valueOf(s.getKey()));
@@ -117,10 +118,10 @@ public class Main extends Application {
 					}
 			rechercheAnimal.getItems().add("non renseigné");
 			rechercheAnimalMoins.getItems().add("non renseigné");
-			ComboBox<String> cbLire = new CreateComboBox(50,(int)scene.getHeight()-240,4,listeRecherche).comboBox;
-			ComboBox<String> cbJeuS= new CreateComboBox(300,(int)scene.getHeight()-240,5,listeRecherche).comboBox;
-			ComboBox<String> cbJeuV = new CreateComboBox(50,(int)scene.getHeight()-170,6,listeRecherche).comboBox;
-			ComboBox<String> cbEnfants = new CreateComboBox(300,(int)scene.getHeight()-170,7,listeRecherche).comboBox;
+			ComboBox<String> cbLire = new CreateComboBox(50,(int)scene.getHeight()-200,4,listeRecherche).comboBox;
+			ComboBox<String> cbJeuS= new CreateComboBox(300,(int)scene.getHeight()-200,5,listeRecherche).comboBox;
+			ComboBox<String> cbJeuV = new CreateComboBox(50,(int)scene.getHeight()-130,6,listeRecherche).comboBox;
+			ComboBox<String> cbEnfants = new CreateComboBox(300,(int)scene.getHeight()-130,7,listeRecherche).comboBox;
 			String[] choix = {"oui", "non", "non renseigné" };
 			for(String s: choix){
 				cbLire.getItems().addAll(s);
@@ -131,11 +132,11 @@ public class Main extends Application {
 			String[] listenom={"Hobby préféré","Hobby détesté","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
 			for(int x=0;x<2;x++){
 				for(int y=0;y<4;y++){
-					Label cL=new CreateLabel(250*x+50, (int)scene.getHeight()-400+y*70, root, listenom[x*4+y]).label;
+					Label cL=new CreateLabel(250*x+50, (int)scene.getHeight()-360+y*70, root, listenom[x*4+y]).label;
 				}
 			}
 			root.getChildren().addAll(rechercheHobby,rechercheHobbyMoins,rechercheAnimal,rechercheAnimalMoins,cbLire,cbJeuS,cbJeuV,cbEnfants);
-			Button bouttonRechercheSelect=new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+150, "Recherche sélective",root).button;
+			Button bouttonRechercheSelect=new CreateButton(175, (int) scene.getHeight()-80, "Recherche sélective",root).button;
 			Label erreur=new CreateLabel((int)scene.getWidth()/2-100, (int)scene.getHeight()/2+180, root).label;
 			erreur.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
 			bouttonRechercheSelect.setOnAction(e -> {
@@ -173,7 +174,6 @@ public class Main extends Application {
 			});
 			primaryStage.setScene(scene);
 			primaryStage.show();
-
 	}
 		catch(Exception e) {
 		}
