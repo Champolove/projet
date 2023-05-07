@@ -40,11 +40,11 @@ public class AfficheProfil{
         imagePersonne.setY(30);
         imagePersonne.setFitWidth(200);
         imagePersonne.setPreserveRatio(true);
-        String s="Nom: "+"\nPrenom: "+"\nAge: "+"\nAime:"+"\nDéteste:";
+        String s="Nom: "+"\nPrenom: "+"\nAge: "+"\nAnimal:"+"\nA peur de:";
         int x=(int) (320+(scene.getWidth()-895)*multi);
         int y=227;
         int minWidth=170;
-        labelDescriptionShort=new CreateLabel(x, y, root, s,18).label;
+        labelDescriptionShort=new CreateLabel(x, y+2, root, s,18).label;
         labelDescriptionShort.setMaxWidth(150);
         x+=100;
         textFieldnom=new CreateTextField(x, y+5, minWidth, p.nom,root).textfield;
@@ -54,7 +54,7 @@ public class AfficheProfil{
         textFielddeteste=new CreateTextField(x, y+5+116, minWidth, p.animalDeteste,root).textfield;
 
         s="Aime lire:"+"\nAime les jeux de société:"+"\nAime les jeu vidéos:"+"\nA des enfants:";
-        labelDescriptionLong=new CreateLabel(x-100, y+143, root, s,18).label;
+        labelDescriptionLong=new CreateLabel(x-100, y+145, root, s,18).label;
         minWidth=50;
         x+=120;
         
@@ -66,7 +66,7 @@ public class AfficheProfil{
         s="Hobby:"+"\nN'aime pas:";
         x-=120;
         minWidth=160;
-        labelDescriptionHobby=new CreateLabel(x-100, y+259, root, s,18).label;
+        labelDescriptionHobby=new CreateLabel(x-100, y+261, root, s,18).label;
         textFieldh=new CreateTextField(x+10, y+5+259, minWidth, p.hobbi,root).textfield;
         textFieldhm=new CreateTextField(x+10, y+5+288, minWidth, p.hobbiM,root).textfield;
         root.getChildren().add(imagePersonne);
