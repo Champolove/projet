@@ -48,13 +48,13 @@ public class Main extends Application {
 				}catch(java.lang.NullPointerException e1){
 				}
 			});
-
 			//modifications côté gauche
 			Button bouttonModifGauche=new CreateButton(365, 580, "Enregistrer les modifications", root).button;
 			bouttonModifGauche.setOnAction(e->{
 				Personne p=gd.dicoPersonne.get(comboBox.getValue().toString());
 				aP.modification(p,gd);
 			});
+
 			//côté droit
 			Rectangle r3 = new CreateRectangle((int) scene.getWidth()-600,15,300,550,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r3);
@@ -85,7 +85,6 @@ public class Main extends Application {
 				comboBox2.setValue(p.get(0));
 			});
 			root.getChildren().addAll(comboBox,comboBox2);
-
 			//modifications côté droit
 			Button bouttonModifdroite=new CreateButton((int) scene.getWidth()-530, 580, "Enregistrer les modifications", root).button;
 			bouttonModifdroite.setOnAction(e->{
