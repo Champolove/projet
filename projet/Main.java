@@ -40,6 +40,7 @@ public class Main extends Application {
 			textArea.setPromptText("Rentrez les informations du rendez-vous");
 			root.getChildren().add(textArea);
 			Label erreurHistorique=new CreateLabel((int) scene.getWidth()/2-190, 275, root).label;
+			erreurHistorique.setStyle("-fx-text-fill: #FF0000;");
 
 			//côté gauche
 			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
@@ -232,6 +233,7 @@ public class Main extends Application {
 			//Erreur no one found
 			Label erreur=new CreateLabel((int)scene.getWidth()/2-100, (int)scene.getHeight()/2+180, root).label;
 			erreur.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+			erreur.setStyle("-fx-text-fill: #FF0000;");
 			bouttonRechercheSelect.setOnAction(e -> {
 				erreur.setText("");
 				ArrayList<Personne> listeRep=new ArrayList<Personne>();
