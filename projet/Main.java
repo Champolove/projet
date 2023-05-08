@@ -54,8 +54,10 @@ public class Main extends Application {
 			textArea.setPromptText("Rentrez les informations du rendez-vous");
 			root.getChildren().add(textArea);
 			Label erreurHistorique=new CreateLabel((int) scene.getWidth()/2-190, 350, root).label;
+			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-180,(int) scene.getHeight()/2+180, root).label;
+			Label erreur=new CreateLabel((int)scene.getWidth()/2-135, (int)scene.getHeight()/2+180, root).label;
 			erreurHistorique.setStyle("-fx-text-fill: #FF0000;");
-
+			
 			//côté gauche
 			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r2);
@@ -88,6 +90,7 @@ public class Main extends Application {
 			comboBox.valueProperty().addListener(observable -> {
 				try {
 					erreurHistorique.setText("");
+					erreur.setText("");
 					aP.update(gd.dicoPersonne.get(comboBox.getValue().toString()));
 					Personne p;
 					Personne p2;
@@ -109,6 +112,7 @@ public class Main extends Application {
 			comboBox2.valueProperty().addListener(observable -> {
 				try {
 					erreurHistorique.setText("");
+					erreur.setText("");
 					aP2.update(gd.dicoPersonne.get(comboBox2.getValue().toString()));
 					Personne p;
 					Personne p2;
@@ -152,6 +156,8 @@ public class Main extends Application {
 			Button bouttonHistorique=new CreateButton((int) scene.getWidth()/2-90, (int)scene.getHeight()/2-50,"Modification d'historique", root).button;
 			bouttonHistorique.setOnAction(e ->{
 				erreurHistorique.setText("");
+				erreur.setText("");
+				erreurRechercheinversee.setText("");
 				Personne p;
 				Personne p2;
 				boolean flag=true;
@@ -177,6 +183,7 @@ public class Main extends Application {
 					}
 				else{
 					erreurHistorique.setText("Vous avez sélectionné la même personne des 2 côtés");
+					erreur.setText("");
 				}
 			});
 			//Recherche inversée
@@ -187,11 +194,11 @@ public class Main extends Application {
 			textField1.setStyle("-fx-prompt-text-fill: #AAAAAA;");
 			textField1.setPromptText("Entrez le nom et le prénom");
 			root.getChildren().add(textField1);
-			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-180,(int) scene.getHeight()/2+180, root).label;
 			erreurRechercheinversee.setStyle("-fx-text-fill: #FF0000;");
 			buttonRechercheinv.setOnAction(e -> {
 				try {
 					erreurRechercheinversee.setText("");
+					erreur.setText("");
 					String name = textField1.getText();
 					Personne p=gd.dicoPersonne.get(name);
 					if(p!=null){
@@ -200,6 +207,7 @@ public class Main extends Application {
 					}
 					else{
 						erreurRechercheinversee.setText("   Personne ne correspond à ce nom et ce prénom\nVeuillez remplir le champ sous la forme Nom Prenom");
+						erreur.setText("");
 					}
 				} catch (FileNotFoundException e1) {
 				}catch(java.lang.NullPointerException e1){
@@ -253,11 +261,12 @@ public class Main extends Application {
 			root.getChildren().addAll(rechercheHobby,rechercheHobbyMoins,rechercheAnimal,rechercheAnimalMoins,cbLire,cbJeuS,cbJeuV,cbEnfants);
 			Button bouttonRechercheSelect=new CreateButton(175, (int) scene.getHeight()-80, "Recherche sélective",root).button;
 			//Erreur no one found
-			Label erreur=new CreateLabel((int)scene.getWidth()/2-135, (int)scene.getHeight()/2+180, root).label;
 			erreur.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
 			erreur.setStyle("-fx-text-fill: #FF0000;");
 			bouttonRechercheSelect.setOnAction(e -> {
 				erreur.setText("");
+				erreurRechercheinversee.setText("");
+				erreurHistorique.setText("");
 				ArrayList<Personne> listeRep=new ArrayList<Personne>();
 					for(Personne p: gd.listePersonne){
 						if((listeRecherche[0]=="non renseigné" || listeRecherche[0]=="" || listeRecherche[0].equals(p.hobbi)) && 
@@ -280,6 +289,7 @@ public class Main extends Application {
 					}
 					else{
 						erreur.setText("Personne ne correspond à ces attributs");
+						erreurRechercheinversee.setText("");
 					}
 			 });
 
@@ -290,7 +300,6 @@ public class Main extends Application {
 				for(int i=1;i<gd.listePersonne.size();i++) {
 					comboBox.getItems().add(gd.listePersonne.get(i));
 				}
-				erreurRechercheinversee.setText("");
 				rechercheAnimal.setValue("");
 				rechercheAnimalMoins.setValue("");
 				rechercheHobby.setValue("");
@@ -301,6 +310,9 @@ public class Main extends Application {
 				cbEnfants.setValue("");
 				textArea.setText("");
 				erreurHistorique.setText("");
+				erreurRechercheinversee.setText("");
+				erreur.setText("");
+
 			});
 
 			//sauvegarde
