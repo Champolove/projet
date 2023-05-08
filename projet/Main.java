@@ -11,24 +11,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-
-import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -59,7 +53,7 @@ public class Main extends Application {
 			textArea.setTranslateY((int) scene.getHeight()/2-20);
 			textArea.setPromptText("Rentrez les informations du rendez-vous");
 			root.getChildren().add(textArea);
-			Label erreurHistorique=new CreateLabel((int) scene.getWidth()/2-190, 275, root).label;
+			Label erreurHistorique=new CreateLabel((int) scene.getWidth()/2-190, 350, root).label;
 			erreurHistorique.setStyle("-fx-text-fill: #FF0000;");
 
 			//côté gauche
@@ -134,7 +128,7 @@ public class Main extends Application {
 				}
 			});
 			comboBox2.setLayoutX(scene.getWidth()-300);
-			Button b=new CreateButton((int)scene.getWidth()/2-65, 250, "Matching", root).button;
+			Button b=new CreateButton((int)scene.getWidth()/2-75, 250, "Matching", root).button;
 			b.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 			b.setMinHeight(40);
 			b.setMinWidth(90);
@@ -155,7 +149,7 @@ public class Main extends Application {
 			});
 
 			//Historique
-			Button bouttonHistorique=new CreateButton((int) scene.getWidth()/2-80, (int)scene.getHeight()/2-50,"Modification d'historique", root).button;
+			Button bouttonHistorique=new CreateButton((int) scene.getWidth()/2-90, (int)scene.getHeight()/2-50,"Modification d'historique", root).button;
 			bouttonHistorique.setOnAction(e ->{
 				erreurHistorique.setText("");
 				Personne p;
@@ -193,7 +187,8 @@ public class Main extends Application {
 			textField1.setStyle("-fx-prompt-text-fill: #AAAAAA;");
 			textField1.setPromptText("Entrez le nom et le prénom");
 			root.getChildren().add(textField1);
-			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-140, (int)scene.getHeight()/2+130, root).label;
+			Label erreurRechercheinversee=new CreateLabel((int) scene.getWidth()/2-180,(int) scene.getHeight()/2+180, root).label;
+			erreurRechercheinversee.setStyle("-fx-text-fill: #FF0000;");
 			buttonRechercheinv.setOnAction(e -> {
 				try {
 					erreurRechercheinversee.setText("");
@@ -258,21 +253,21 @@ public class Main extends Application {
 			root.getChildren().addAll(rechercheHobby,rechercheHobbyMoins,rechercheAnimal,rechercheAnimalMoins,cbLire,cbJeuS,cbJeuV,cbEnfants);
 			Button bouttonRechercheSelect=new CreateButton(175, (int) scene.getHeight()-80, "Recherche sélective",root).button;
 			//Erreur no one found
-			Label erreur=new CreateLabel((int)scene.getWidth()/2-100, (int)scene.getHeight()/2+180, root).label;
+			Label erreur=new CreateLabel((int)scene.getWidth()/2-135, (int)scene.getHeight()/2+180, root).label;
 			erreur.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 14));
 			erreur.setStyle("-fx-text-fill: #FF0000;");
 			bouttonRechercheSelect.setOnAction(e -> {
 				erreur.setText("");
 				ArrayList<Personne> listeRep=new ArrayList<Personne>();
 					for(Personne p: gd.listePersonne){
-						if((listeRecherche[0]=="non renseigné" || listeRecherche[0]=="" || listeRecherche[0]==p.hobbi) && 
-						(listeRecherche[1]=="non renseigné" || listeRecherche[1]==""|| listeRecherche[1]==p.hobbiM) &&
-						(listeRecherche[2]=="non renseigné" || listeRecherche[2]==""|| listeRecherche[2]==p.animalAime) && 
-						(listeRecherche[3]=="non renseigné" || listeRecherche[3]==""|| listeRecherche[3]==p.animalDeteste) && 
-						(listeRecherche[4]=="non renseigné" || listeRecherche[4]==""|| listeRecherche[4]==p.aimeLire) && 
-						(listeRecherche[5]=="non renseigné" || listeRecherche[5]==""|| listeRecherche[5]==p.aimeJouerS) && 
-						(listeRecherche[6]=="non renseigné" || listeRecherche[6]==""|| listeRecherche[6]==p.aimeJouerJV) && 
-						(listeRecherche[7]=="non renseigné" || listeRecherche[7]==""|| listeRecherche[7]==p.aEnfant)){
+						if((listeRecherche[0]=="non renseigné" || listeRecherche[0]=="" || listeRecherche[0].equals(p.hobbi)) && 
+						(listeRecherche[1]=="non renseigné" || listeRecherche[1]==""|| listeRecherche[1].equals(p.hobbiM)) &&
+						(listeRecherche[2]=="non renseigné" || listeRecherche[2]==""|| listeRecherche[2].equals(p.animalAime)) && 
+						(listeRecherche[3]=="non renseigné" || listeRecherche[3]==""|| listeRecherche[3].equals(p.animalDeteste)) && 
+						(listeRecherche[4]=="non renseigné" || listeRecherche[4]==""|| listeRecherche[4].equals(p.aimeLire)) && 
+						(listeRecherche[5]=="non renseigné" || listeRecherche[5]==""|| listeRecherche[5].equals(p.aimeJouerS)) && 
+						(listeRecherche[6]=="non renseigné" || listeRecherche[6]==""|| listeRecherche[6].equals(p.aimeJouerJV)) && 
+						(listeRecherche[7]=="non renseigné" || listeRecherche[7]==""|| listeRecherche[7].equals(p.aEnfant))){
 							listeRep.add(p);
 						}
 					}

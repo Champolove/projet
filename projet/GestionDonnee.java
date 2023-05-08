@@ -157,7 +157,6 @@ public class GestionDonnee {
 				dicoPersonne.put(p.nom+" "+p.prenom,p);
 				listePersonne.add(p);
 			}
-			
 			scanner.close();
 			scanner=new Scanner(file2);
 			int i=0;
