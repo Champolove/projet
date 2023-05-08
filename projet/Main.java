@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.text.FontPosture;
@@ -15,6 +16,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Main extends Application {
@@ -31,6 +33,13 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("/images/coeur-plein.png"));
 			Algo algo=new Algo();
 			GestionDonnee gd=new GestionDonnee();
+			HashMap<Integer,Historique> dicoHistorique=new HashMap<Integer,Historique>();
+			TextArea textArea = new TextArea();
+			textArea.setTranslateX((int) scene.getWidth()/2-240);
+			textArea.setTranslateY(80);
+			textArea.setPromptText("Rentrez les informations du rendez-vous");
+			root.getChildren().add(textArea);
+			Label erreurHistorique=new CreateLabel((int) scene.getWidth()/2-190, 275, root).label;
 
 			//côté gauche
 			Rectangle r2 = new CreateRectangle(300,15,300,550,20,"#ECE8E7").rectangle;
@@ -40,14 +49,7 @@ public class Main extends Application {
 			comboBox.setButtonCell(new CellSelect());
 			comboBox.setValue(gd.listePersonne.get(0));
 			comboBox.setCellFactory(listView -> new CellDefill()); //changer ici pour les cases affichées
-			comboBox.valueProperty().addListener(observable -> {
-				try {
-					aP.update(gd.dicoPersonne.get(comboBox.getValue().toString()));
-				} catch (FileNotFoundException e1) {
-					
-				}catch(java.lang.NullPointerException e1){
-				}
-			});
+			
 			//modifications côté gauche
 			Button bouttonModifGauche=new CreateButton(365, 580, "Enregistrer les modifications", root).button;
 			bouttonModifGauche.setOnAction(e->{
@@ -67,9 +69,45 @@ public class Main extends Application {
 				comboBox.getItems().add(gd.listePersonne.get(i));
 				comboBox2.getItems().add(gd.listePersonne.get(i)); ///setall à la place de addAll pour remplacer les valeurs
 			}
+			//observable sur les comboBox
+			comboBox.valueProperty().addListener(observable -> {
+				try {
+					erreurHistorique.setText("");
+					aP.update(gd.dicoPersonne.get(comboBox.getValue().toString()));
+					Personne p;
+					Personne p2;
+					textArea.setText("");
+					for(Historique h: dicoHistorique.values()){
+						p=gd.dicoPersonne.get(comboBox.getValue().toString());
+						p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
+						if((h.personne1.nom==p.nom && h.personne1.prenom==p.prenom &&
+						   h.personne2.nom==p2.nom && h.personne2.prenom==p2.prenom)||(h.personne1.nom==p2.nom && h.personne1.prenom==p2.prenom &&
+						   h.personne2.nom==p.nom && h.personne2.prenom==p.prenom) ){
+							textArea.setText(h.contexte);
+						}
+					}
+				} catch (FileNotFoundException e1) {
+					
+				}catch(java.lang.NullPointerException e1){
+				}
+			});
 			comboBox2.valueProperty().addListener(observable -> {
 				try {
+					erreurHistorique.setText("");
 					aP2.update(gd.dicoPersonne.get(comboBox2.getValue().toString()));
+					Personne p;
+					Personne p2;
+					textArea.setText("");
+					for(Historique h: dicoHistorique.values()){
+						p=gd.dicoPersonne.get(comboBox.getValue().toString());
+						p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
+						if((h.personne1.nom==p.nom && h.personne1.prenom==p.prenom &&
+						   h.personne2.nom==p2.nom && h.personne2.prenom==p2.prenom)||
+						   (h.personne1.nom==p2.nom && h.personne1.prenom==p2.prenom &&
+						   h.personne2.nom==p.nom && h.personne2.prenom==p.prenom)){
+							textArea.setText(h.contexte);
+						}
+					}
 				} catch (FileNotFoundException e1) {
 				}catch(java.lang.NullPointerException e1){
 				}
@@ -92,6 +130,37 @@ public class Main extends Application {
 				aP2.modification(p,gd);
 			});
 
+			//Historique
+			Button bouttonHistorique=new CreateButton((int) scene.getWidth()/2-84, 50,"Modification d'historique", root).button;
+			bouttonHistorique.setOnAction(e ->{
+				erreurHistorique.setText("");
+				Personne p;
+				Personne p2;
+				boolean flag=true;
+				int i=0;
+				Historique h;
+				while(flag && i<dicoHistorique.size()){
+					h=dicoHistorique.get(i);
+					p=gd.dicoPersonne.get(comboBox.getValue().toString());
+					p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
+					if(h.personne1.nom==p.nom && h.personne1.prenom==p.prenom &&
+					   h.personne2.nom==p2.nom && h.personne2.prenom==p2.prenom){
+						h.contexte=textArea.getText();
+						flag=false;
+					}
+					else{
+						i+=1;
+					}
+				}
+				if(flag && !comboBox.getValue().toString().equals(comboBox2.getValue().toString())){
+					gd.dicoPersonne.get(comboBox.getValue().toString()).listeRencontre.add(dicoHistorique.size());
+					gd.dicoPersonne.get(comboBox2.getValue().toString()).listeRencontre.add(dicoHistorique.size());
+					dicoHistorique.put(dicoHistorique.size(),new Historique(gd.dicoPersonne.get(comboBox.getValue().toString()), gd.dicoPersonne.get(comboBox2.getValue().toString()),textArea.getText()));
+					}
+				else{
+					erreurHistorique.setText("Vous avez sélectionné la même personne des 2 côtés");
+				}
+			});
 			//Recherche inversée
 			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r1);
@@ -206,8 +275,10 @@ public class Main extends Application {
 				cbJeuS.setValue("");
 				cbJeuV.setValue("");
 				cbEnfants.setValue("");
+				textArea.setText("");
+				erreurHistorique.setText("");
 			});
-			
+
 			//setScene
 			primaryStage.setScene(scene);
 			primaryStage.show();

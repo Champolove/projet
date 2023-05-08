@@ -20,6 +20,7 @@ public class Personne {
 	String hobbiM;
 	ArrayList<String> hash;
 	ArrayList<String> hashMatch;
+	ArrayList<Integer> listeRencontre;
 	boolean hetero;
 
 	public Personne(String n, String pn, int a, String s, String att,String aA,String aD,String aL,String aS,String aJV,String aE,String h,String hm) {
@@ -41,8 +42,7 @@ public class Personne {
 		hashMatch=new ArrayList<>();
 		hash.addAll(Arrays.asList(s,att,String.valueOf(GestionDonnee.dicoAnimal.get(aA)),String.valueOf(GestionDonnee.dicoAnimal.get(aD)),aL,aS,aJV,aE,String.valueOf(GestionDonnee.dicoHobbies.get(h)),String.valueOf(GestionDonnee.dicoHobbies.get(hm))));
 		hashMatch.addAll(Arrays.asList(att,s,animalDeteste,animalAime,aL,aS,aJV,aE,hobbiM,hobbi));
-		
-
+		listeRencontre=new ArrayList<Integer>();
 	}
 	public String toString() {
 		return this.nom+" "+this.prenom;
