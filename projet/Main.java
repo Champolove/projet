@@ -251,7 +251,7 @@ public class Main extends Application {
 				cbJeuV.getItems().add(s);
 				cbEnfants.getItems().add(s);
 			}
-			String[] listenom={"Hobby préféré","N'aime pas","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
+			String[] listenom={"Hobby préféré","N'aime pas","Aime Lire","Aime les jeux vidéos","Animal préféré","A peur de","Aime les jeux de sociétés","A des enfants"};
 			//Label recherche sélective
 			for(int x=0;x<2;x++){
 				for(int y=0;y<4;y++){
