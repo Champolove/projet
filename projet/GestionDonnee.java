@@ -1,15 +1,18 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.HashMap;
 
 public class GestionDonnee {
 	HashMap<String,Personne> dicoPersonne=new HashMap<String,Personne>();
 	static HashMap<String,Integer> dicoAnimal=new HashMap<>();
 	static HashMap<String,Integer> dicoHobbies=new HashMap<>();
+	HashMap<Integer,Historique> dicoHistorique;
 	static enum animal{
 		chat,
 		chien,
@@ -72,6 +75,7 @@ public class GestionDonnee {
 	}
 
 	public GestionDonnee() throws IOException {
+		dicoHistorique=new HashMap<Integer,Historique>();
 		int cpt=0;
         for(GestionDonnee.animal s: animal.values()){
             String a=s.toString();
@@ -121,6 +125,51 @@ public class GestionDonnee {
 			}
 			catch (IndexOutOfBoundsException e){
 			}
+		}
+	}
+
+	public GestionDonnee(File file,File file2) throws FileNotFoundException {
+		int cpt=0;
+        for(GestionDonnee.animal s: animal.values()){
+            String a=s.toString();
+            dicoAnimal.put(a,cpt);
+            cpt+=1;
+        }
+		cpt=0;
+        for(GestionDonnee.hobbies s: hobbies.values()){
+            String a=s.toString();
+            dicoHobbies.put(a,cpt-7);
+            cpt+=1;
+        }
+		dicoHistorique=new HashMap<Integer,Historique>();
+        try {
+			Scanner scanner = new Scanner(file);
+			while(scanner.hasNext()){
+				String line = scanner.nextLine();
+                String[] data=line.split(";&");
+				Personne p=new Personne(data[0], data[1], Integer.valueOf(data[2]), data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12]);
+				p.URLPhoto=data[13];
+				if(data.length>13){
+					for(int i=14;i<data.length;i++){
+						p.listeRencontre.add(Integer.valueOf(data[i]));
+					}
+				}
+				dicoPersonne.put(p.nom+" "+p.prenom,p);
+				listePersonne.add(p);
+			}
+			
+			scanner.close();
+			scanner=new Scanner(file2);
+			int i=0;
+			while(scanner.hasNext()){
+				String line = scanner.nextLine();
+				String[] data=line.split(";&");
+				Historique h=new Historique(dicoPersonne.get(data[0]), dicoPersonne.get(data[1]), data[2]);
+				dicoHistorique.put(0,h);
+			}
+			scanner.close();
+        }catch(FileNotFoundException e2){
+
 		}
 	}
 }

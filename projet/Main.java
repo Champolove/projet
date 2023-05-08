@@ -1,30 +1,42 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+
+import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-
 			//setup
 			GraphicsDevice ecranTaille = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			Group root = new Group();
@@ -32,11 +44,19 @@ public class Main extends Application {
 			primaryStage.setTitle("Champolove");
 			primaryStage.getIcons().add(new Image("/images/coeur-plein.png"));
 			Algo algo=new Algo();
-			GestionDonnee gd=new GestionDonnee();
-			HashMap<Integer,Historique> dicoHistorique=new HashMap<Integer,Historique>();
+			File file=new File("projet/data.txt");
+			File file2=new File("projet/contexte.txt");
+			GestionDonnee gd;
+			if(file.exists()){
+				gd=new GestionDonnee(file,file2);
+			}
+			else{
+				gd=new GestionDonnee();
+			}
+			
 			TextArea textArea = new TextArea();
 			textArea.setTranslateX((int) scene.getWidth()/2-240);
-			textArea.setTranslateY(80);
+			textArea.setTranslateY((int) scene.getHeight()/2-20);
 			textArea.setPromptText("Rentrez les informations du rendez-vous");
 			root.getChildren().add(textArea);
 			Label erreurHistorique=new CreateLabel((int) scene.getWidth()/2-190, 275, root).label;
@@ -78,7 +98,7 @@ public class Main extends Application {
 					Personne p;
 					Personne p2;
 					textArea.setText("");
-					for(Historique h: dicoHistorique.values()){
+					for(Historique h: gd.dicoHistorique.values()){
 						p=gd.dicoPersonne.get(comboBox.getValue().toString());
 						p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
 						if((h.personne1.nom==p.nom && h.personne1.prenom==p.prenom &&
@@ -99,7 +119,7 @@ public class Main extends Application {
 					Personne p;
 					Personne p2;
 					textArea.setText("");
-					for(Historique h: dicoHistorique.values()){
+					for(Historique h: gd.dicoHistorique.values()){
 						p=gd.dicoPersonne.get(comboBox.getValue().toString());
 						p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
 						if((h.personne1.nom==p.nom && h.personne1.prenom==p.prenom &&
@@ -114,7 +134,10 @@ public class Main extends Application {
 				}
 			});
 			comboBox2.setLayoutX(scene.getWidth()-300);
-			Button b=new CreateButton((int)scene.getWidth()/2, (int) scene.getHeight()/2, "Matching", root).button;
+			Button b=new CreateButton((int)scene.getWidth()/2-65, 250, "Matching", root).button;
+			b.setFont(Font.font("Lucida Sans Unicode", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+			b.setMinHeight(40);
+			b.setMinWidth(90);
 			b.setOnAction(e-> {
 				ArrayList<Personne> p=algo.listeMatch(comboBox.getValue(), gd.listePersonne);
 				comboBox2.getItems().setAll(p.get(0));
@@ -132,7 +155,7 @@ public class Main extends Application {
 			});
 
 			//Historique
-			Button bouttonHistorique=new CreateButton((int) scene.getWidth()/2-84, 50,"Modification d'historique", root).button;
+			Button bouttonHistorique=new CreateButton((int) scene.getWidth()/2-80, (int)scene.getHeight()/2-50,"Modification d'historique", root).button;
 			bouttonHistorique.setOnAction(e ->{
 				erreurHistorique.setText("");
 				Personne p;
@@ -140,8 +163,8 @@ public class Main extends Application {
 				boolean flag=true;
 				int i=0;
 				Historique h;
-				while(flag && i<dicoHistorique.size()){
-					h=dicoHistorique.get(i);
+				while(flag && i<gd.dicoHistorique.size()){
+					h=gd.dicoHistorique.get(i);
 					p=gd.dicoPersonne.get(comboBox.getValue().toString());
 					p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
 					if(h.personne1.nom==p.nom && h.personne1.prenom==p.prenom &&
@@ -154,19 +177,19 @@ public class Main extends Application {
 					}
 				}
 				if(flag && !comboBox.getValue().toString().equals(comboBox2.getValue().toString())){
-					gd.dicoPersonne.get(comboBox.getValue().toString()).listeRencontre.add(dicoHistorique.size());
-					gd.dicoPersonne.get(comboBox2.getValue().toString()).listeRencontre.add(dicoHistorique.size());
-					dicoHistorique.put(dicoHistorique.size(),new Historique(gd.dicoPersonne.get(comboBox.getValue().toString()), gd.dicoPersonne.get(comboBox2.getValue().toString()),textArea.getText()));
+					gd.dicoPersonne.get(comboBox.getValue().toString()).listeRencontre.add(gd.dicoHistorique.size());
+					gd.dicoPersonne.get(comboBox2.getValue().toString()).listeRencontre.add(gd.dicoHistorique.size());
+					gd.dicoHistorique.put(gd.dicoHistorique.size(),new Historique(gd.dicoPersonne.get(comboBox.getValue().toString()), gd.dicoPersonne.get(comboBox2.getValue().toString()),textArea.getText()));
 					}
 				else{
 					erreurHistorique.setText("Vous avez sélectionné la même personne des 2 côtés");
 				}
 			});
 			//Recherche inversée
-			Rectangle r1 = new CreateRectangle((int) scene.getWidth()/2-64,(int) scene.getHeight()/2+40,197,90,20,"#ECE8E7").rectangle;
+			Rectangle r1 = new CreateRectangle((int) scene.getWidth()-290,(int) scene.getHeight()-157,197,90,20,"#ECE8E7").rectangle;
 			root.getChildren().add(r1);
-			Button buttonRechercheinv = new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+50, "Recherche Inversée", root).button;
-			TextField textField1 = new CreateTextField((int) scene.getWidth()/2-53, (int) scene.getHeight()/2+100, 175).textfield;
+			Button buttonRechercheinv = new CreateButton((int) scene.getWidth()-250, (int) scene.getHeight()-150, "Recherche Inversée", root).button;
+			TextField textField1 = new CreateTextField((int) scene.getWidth()-278, (int) scene.getHeight()-100, 175).textfield;
 			textField1.setStyle("-fx-prompt-text-fill: #AAAAAA;");
 			textField1.setPromptText("Entrez le nom et le prénom");
 			root.getChildren().add(textField1);
@@ -198,6 +221,10 @@ public class Main extends Application {
 			ComboBox<String> rechercheHobbyMoins= new CreateComboBox(50,(int)scene.getHeight()-270,1,listeRecherche).comboBox;
 			ComboBox<String> rechercheAnimal= new CreateComboBox(300,(int)scene.getHeight()-340,2,listeRecherche).comboBox;
 			ComboBox<String> rechercheAnimalMoins= new CreateComboBox(300,(int)scene.getHeight()-270,3,listeRecherche).comboBox;
+			rechercheHobby.setVisibleRowCount(9);
+			rechercheHobbyMoins.setVisibleRowCount(9);
+			rechercheAnimal.setVisibleRowCount(9);
+			rechercheAnimalMoins.setVisibleRowCount(9);
 			for(Map.Entry s: GestionDonnee.dicoHobbies.entrySet()) {
 				rechercheHobby.getItems().add(String.valueOf(s.getKey()));
 				rechercheHobbyMoins.getItems().add(String.valueOf(s.getKey()));
@@ -221,7 +248,7 @@ public class Main extends Application {
 				cbJeuV.getItems().add(s);
 				cbEnfants.getItems().add(s);
 			}
-			String[] listenom={"Hobby préféré","Hobby détesté","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
+			String[] listenom={"Hobby préféré","N'aime pas","Aime Lire","Aime les jeux vidéos","Animal préféré","Animal détesté","Aime les jeux de sociétés","A des enfants"};
 			//Label recherche sélective
 			for(int x=0;x<2;x++){
 				for(int y=0;y<4;y++){
@@ -262,7 +289,7 @@ public class Main extends Application {
 			 });
 
 			//Reset 
-			Button bouttonReset=new CreateButton((int) scene.getWidth()/2-24, (int) scene.getHeight()/2+250, "Reset la recherche",root).button;
+			Button bouttonReset=new CreateButton((int) scene.getWidth()/2-60, (int) scene.getHeight()/2+250, "Reset la recherche",root).button;
 			bouttonReset.setOnAction(e -> {
 			comboBox.getItems().setAll(gd.listePersonne.get(0));
 				for(int i=1;i<gd.listePersonne.size();i++) {
@@ -281,14 +308,58 @@ public class Main extends Application {
 				erreurHistorique.setText("");
 			});
 
+			//sauvegarde
+			Button quitter=new CreateButton((int)scene.getWidth()/2-75, (int)scene.getHeight()-50, "Sauvegarder et quitter", root).button;
+			quitter.setOnAction(e-> {
+				Alert alert=new Alert(AlertType.CONFIRMATION,"Sauvegarder?", ButtonType.YES,ButtonType.NO);
+				Image image = new Image("/images/coeur-casse.png");
+				ImageView imageView = new ImageView(image);
+				imageView.setFitHeight(50);
+				imageView.setFitWidth(50);
+				alert.setGraphic(imageView);
+				alert.setTitle("Fermeture du logiciel");
+				alert.setHeaderText("");
+				alert.getDialogPane().setStyle("-fx-background-color: #BAFF90;");
+				if (alert.showAndWait().filter(t -> t == ButtonType.YES).isPresent()) {
+					try{
+						bouttonHistorique.fire();
+						Personne p1=gd.dicoPersonne.get(comboBox.getValue().toString());
+						aP.modification(p1,gd);
+						Personne p2=gd.dicoPersonne.get(comboBox2.getValue().toString());
+						aP2.modification(p2,gd);
+						File outFile = new File("projet/data.txt");
+						FileWriter fileWriter = new FileWriter(outFile);
+						String s;
+						for(Personne p: gd.listePersonne){
+							s=p.prenom+";&"+p.nom+";&"+p.age+";&"+p.sexe+";&"+p.attirance+";&"+p.animalAime+";&"+p.animalDeteste+";&"+p.aimeLire+";&"+p.aimeJouerS+";&"+
+							p.aimeJouerJV+";&"+p.aEnfant+";&"+p.hobbi+";&"+p.hobbiM+";&"+p.URLPhoto;
+							for(Integer i: p.listeRencontre){
+								s+=";&"+i;
+							}
+							fileWriter.write(s);
+							fileWriter.write("\n");
+						}
+						fileWriter.close();
+						File outFile2 = new File("projet/contexte.txt");
+						FileWriter fileWriter2 = new FileWriter(outFile2);
+						for(Historique h: gd.dicoHistorique.values()){
+							fileWriter2.write(h.personne1.toString()+";&"+h.personne2.toString()+";&"+h.contexte);
+							fileWriter2.write("\n");
+						}
+						fileWriter2.close();
+
+					}catch(IOException e2){
+					}
+					System.exit(1);
+				}
+			});
 			//setScene
+			scene.setFill(javafx.scene.paint.Color.valueOf("#c7fde0"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
-
 	}
 		catch(Exception e) {
 		}
-
 	}
 
 	public static void main(String[] args) {

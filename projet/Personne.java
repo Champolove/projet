@@ -23,9 +23,9 @@ public class Personne {
 	ArrayList<Integer> listeRencontre;
 	boolean hetero;
 
-	public Personne(String n, String pn, int a, String s, String att,String aA,String aD,String aL,String aS,String aJV,String aE,String h,String hm) {
-		prenom=n;
-		nom=pn;
+	public Personne(String pn, String n, int a, String s, String att,String aA,String aD,String aL,String aS,String aJV,String aE,String h,String hm) {
+		prenom=pn;
+		nom=n;
 		age=a;
 		sexe=s;
 		attirance=att;
