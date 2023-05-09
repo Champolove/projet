@@ -41,7 +41,7 @@ public class Main extends Application {
 			File file=new File("projet/data.txt");
 			File file2=new File("projet/contexte.txt");
 			GestionDonnee gd;
-			if(file.exists()){
+			if(file.exists() && file2.exists()){
 				gd=new GestionDonnee(file,file2);
 			}
 			else{
